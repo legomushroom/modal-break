@@ -18,10 +18,17 @@ Main = (function() {
     $protoImage = $('.js-proto-image');
     $breakParts = $('#js-break-parts');
     $('.modal').on('keyup', 'input', function(e) {
-      var $it, text;
+      var $it, k, text;
       $it = $(e.target);
-      text = $.trim($it.val());
-      return $it.toggleClass('is-fill', !!text);
+      text = $it.val();
+      $it.toggleClass('is-fill', !!text);
+      if ($it.attr('type') === 'text') {
+        text = text.replace(/\s/g, '');
+      }
+      k = e.keyCode;
+      if ((k > 48 && k < 90) || (k === 48 || k === 45 || k === 32)) {
+        return $it.val(text);
+      }
     });
     $input = null;
     $close.on('mouseleave touchstart', function() {

@@ -1162,6 +1162,7 @@ _html2canvas.Parse = function (images, options) {
 
   function getTextBounds(state, text, textDecoration, isLast, transform) {
     var bounds;
+
     if (support.rangeBounds && !transform) {
       if (textDecoration !== "none" || Util.trimText(text).length !== 0) {
         bounds = textRangeBounds(text, state.node, state.textOffset);
@@ -1215,8 +1216,8 @@ _html2canvas.Parse = function (images, options) {
       textNode.nodeValue.split(/(\b| )/)
       : textNode.nodeValue.split("");
 
-      metrics = setTextVariables(ctx, el, textDecoration, color);
 
+      metrics = setTextVariables(ctx, el, textDecoration, color);
       if (options.chinese) {
         textList.forEach(function(word, index) {
           if (/.*[\u4E00-\u9FA5].*$/.test(word)) {
@@ -1226,10 +1227,16 @@ _html2canvas.Parse = function (images, options) {
           }
         });
       }
-
       textList.forEach(function(text, index) {
         var bounds = getTextBounds(state, text, textDecoration, (index < textList.length - 1), stack.transform.matrix);
         if (bounds) {
+          // var shiftX = 0;
+          // if (text === '⠀') {
+          //   bounds.right -= 50;
+          //   bounds.left  -= 50;
+          //   // shiftX = -125;
+          // }
+          // console.log(bounds.left)
           drawText(text, bounds.left, bounds.bottom, ctx);
           renderTextDecoration(ctx, textDecoration, bounds, metrics, color);
         }
@@ -1799,6 +1806,8 @@ _html2canvas.Parse = function (images, options) {
     } else {
       if (el.type === 'password') {
         textValue = textValue.replace(/./gim,'•');
+      } else {
+        // textValue = textValue.replace(/\s/gim, '⠀')
       }
     }
 
@@ -2627,7 +2636,6 @@ _html2canvas.Util.Support = function (options, doc) {
     "</foreignObject>",
     "</svg>"
     ].join("");
-    // console.log(img.src);
     try {
       ctx.drawImage(img, 0, 0);
       canvas.toDataURL();

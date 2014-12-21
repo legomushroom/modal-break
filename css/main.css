@@ -1506,7 +1506,6 @@ button--grey,
   font-size: 0.875rem;
   color: #222;
   font-family: OpenSans;
-  line-height: 2.5rem;
 }
 .input-with-label__input:hover {
   background: rgba(34,34,34,0.01);

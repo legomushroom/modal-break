@@ -23,8 +23,13 @@ class Main
 
     $('.modal').on 'keyup', 'input', (e)->
       $it = $(e.target)
-      text = $.trim $it.val()
+      text = $it.val()
       $it.toggleClass 'is-fill', !!text
+      if $it.attr('type') is 'text'
+        text = text.replace /\s/g, ''
+      k = e.keyCode
+      if (k> 48 and k< 90) or k in [48,45,32]
+        $it.val text
 
     $input = null
     $close.on 'mouseleave touchstart', ->
