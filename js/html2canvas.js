@@ -1789,12 +1789,17 @@ _html2canvas.Parse = function (images, options) {
       valueWrap.style.lineHeight = (lineHeight - lineHeightYOffset) + 'px';
     }
 
-    valueWrap.style.top = bounds.top + "px";
+    valueWrap.style.top  = bounds.top  + "px";
     valueWrap.style.left = bounds.left + "px";
-
+    valueWrap.style.letterSpacing = getCSS(el, 'letterSpacing');
     textValue = (el.nodeName === "SELECT") ? (el.options[el.selectedIndex] || 0).text : el.value;
+
     if(!textValue) {
       textValue = el.placeholder;
+    } else {
+      if (el.type === 'password') {
+        textValue = textValue.replace(/./gim,'•');
+      }
     }
 
     textNode = doc.createTextNode(textValue);
@@ -2107,7 +2112,7 @@ _html2canvas.Parse = function (images, options) {
       case "INPUT":
         // TODO add all relevant type's, i.e. HTML5 new stuff
         // todo add support for placeholder attribute for browsers which support it
-        if (/^(text|url|email|submit|button|reset)$/.test(element.type) && (element.value || element.placeholder || "").length > 0){
+        if (/^(text|url|email|submit|button|reset|password)$/.test(element.type) && (element.value || element.placeholder || "").length > 0){
           renderFormValue(element, bounds, stack);
         }
         break;
