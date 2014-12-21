@@ -1,0 +1,45 @@
+// GRID
+@import '../assets/imports.styl'
+
+// Gutter size
+gls = gs
+gutterSizes = 10
+gridSize = 20
+part = (100/gridSize)%
+/* c9f545437c019c6b67579d6dadc07ecf */
+.grid
+  clearfix()
+  .grid-bit
+    float left
+    padding-left gls
+    padding-right: (gls/2)
+    &:last-of-type
+      padding-right gls
+    & + .grid-bit
+      padding-left: (gls/2)
+
+  // gutters
+  for i in 2..gutterSizes
+    &--gutter-x{i}
+      .grid-bit
+        padding-left i*gls
+        padding-right: (i*gls/2)
+        &:last-of-type
+          padding-right i*gls
+        & + .grid-bit
+          padding-left: (i*gls/2)
+
+  /* b9a0ff7b6444fe8b3932c06919534ab5 */
+  &--sliced
+    .grid-bit
+      &:first-of-type
+        padding-left 0
+      &:last-of-type
+        padding-right 0 
+
+/* c9f545437c019c6b67579d6dadc07ecf */
+.grid-bit
+  for i in 1..gridSize
+    &--{i}-{gridSize}
+      width i*part
+  
