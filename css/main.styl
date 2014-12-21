@@ -112,13 +112,14 @@ modalWidth  = 48*gs
     letter-spacing PX
     font-size 14*PX
     color c-black
-    font-family OpenSans 
+    font-family OpenSans
+    line-height 4*gs
     &:hover
       background rgba(c-black, .01)
-    &:not(:focus).is-fill
+    &:not(:focus):not(.is-keep-focus).is-fill
       & + {root()}__label
         display none
-    &:focus
+    &:focus, &.is-keep-focus
       outline none
       background rgba(c-black, .01)
       & + {root()}__label
@@ -131,15 +132,8 @@ modalWidth  = 48*gs
         border-top-right-radius 4*PX
         color white
         letter-spacing PX
-        // transition top .12s ease-out
-        &:before
-          content ''
-          position absolute
-          left 0
-          bottom -4*PX
-          rect 0
-          border 4*PX solid transparent
-          border-left-color c-black
+        .input-with-label__label__corner
+          display block
   &__label
     font-size 14*PX
     display block
@@ -149,6 +143,14 @@ modalWidth  = 48*gs
     left gs
     cursor text
     user-select none
+    &__corner
+      display none
+      position absolute
+      left 0
+      bottom -4*PX
+      rect 0
+      border 4*PX solid transparent
+      border-left-color c-black
 
 .modal-overlay
   rect 100%

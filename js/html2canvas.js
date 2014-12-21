@@ -1777,7 +1777,16 @@ _html2canvas.Parse = function (images, options) {
     valueWrap.style.position = "absolute";
 
     if (/^(submit|reset|button|text|password)$/.test(el.type) || el.nodeName === "SELECT"){
-      valueWrap.style.lineHeight = getCSS(el, "height");
+      var height      = parseInt(getCSS(el, "height"), 10),
+          lineHeight  = height, lineHeightYOffset = 0,
+          boxModel    = getCSS(el, "boxSizing");
+
+      if (boxModel  === 'border-box') {
+        var borderTop    = parseInt(getCSS(el, "borderTopWidth"), 10),
+            borderBottom = parseInt(getCSS(el, "borderBottomWidth"), 10);
+        var lineHeightYOffset = borderTop + borderBottom;
+      }
+      valueWrap.style.lineHeight = (lineHeight - lineHeightYOffset) + 'px';
     }
 
     valueWrap.style.top = bounds.top + "px";
@@ -2613,6 +2622,7 @@ _html2canvas.Util.Support = function (options, doc) {
     "</foreignObject>",
     "</svg>"
     ].join("");
+    // console.log(img.src);
     try {
       ctx.drawImage(img, 0, 0);
       canvas.toDataURL();

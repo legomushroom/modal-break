@@ -1506,18 +1506,21 @@ button--grey,
   font-size: 0.875rem;
   color: #222;
   font-family: OpenSans;
+  line-height: 2.5rem;
 }
 .input-with-label__input:hover {
   background: rgba(34,34,34,0.01);
 }
-.input-with-label__input:not(:focus).is-fill + .input-with-label__label {
+.input-with-label__input:not(:focus):not(.is-keep-focus).is-fill + .input-with-label__label {
   display: none;
 }
-.input-with-label__input:focus {
+.input-with-label__input:focus,
+.input-with-label__input.is-keep-focus {
   outline: none;
   background: rgba(34,34,34,0.01);
 }
-.input-with-label__input:focus + .input-with-label__label {
+.input-with-label__input:focus + .input-with-label__label,
+.input-with-label__input.is-keep-focus + .input-with-label__label {
   top: -0.875rem;
   left: 0;
   background: #222;
@@ -1528,15 +1531,9 @@ button--grey,
   color: #fff;
   letter-spacing: 0.0625rem;
 }
-.input-with-label__input:focus + .input-with-label__label:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -0.25rem;
-  width: 0;
-  height: 0;
-  border: 0.25rem solid transparent;
-  border-left-color: #222;
+.input-with-label__input:focus + .input-with-label__label .input-with-label__label__corner,
+.input-with-label__input.is-keep-focus + .input-with-label__label .input-with-label__label__corner {
+  display: block;
 }
 .input-with-label__label {
   font-size: 0.875rem;
@@ -1550,6 +1547,16 @@ button--grey,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.input-with-label__label__corner {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: -0.25rem;
+  width: 0;
+  height: 0;
+  border: 0.25rem solid transparent;
+  border-left-color: #222;
 }
 .modal-overlay {
   width: 100%;

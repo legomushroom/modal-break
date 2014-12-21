@@ -21,20 +21,20 @@ class Main
 
     $breakParts = $('#js-break-parts')
 
-
     $('.modal').on 'keyup', 'input', (e)->
       $it = $(e.target)
       text = $.trim $it.val()
       $it.toggleClass 'is-fill', !!text
 
-    # label = null
+    $input = null
+    $close.on 'mouseleave touchstart', ->
+      $input?.removeClass 'is-keep-focus'
+      $input = null
+
     $close.on 'mouseenter touchstart', ->
+      $input = $('input:focus').addClass 'is-keep-focus'
       console.time 'render'
-      $clone = $(modal).clone()
-      $(document.body).prepend($clone)
-      console.log $clone[0]
-      # $('input:focus').trigger 'blur'
-      html2canvas $(modal)[0],
+      html2canvas modal,
         onrendered: (canvas)->
           dataURL = canvas.toDataURL()
           $protoImage.attr 'xlink:href', dataURL
@@ -45,13 +45,13 @@ class Main
           console.timeEnd 'render'
 
 
+
     $close.on 'click', ->
-      setTimeout ->
-        modal.style.display = 'none'
-        $breakParts.css
-          'z-index': 2
-          opacity: 1
-      , 20
+      modal.style.display = 'none'
+      $breakParts.css
+        'z-index': 2
+        opacity: 1
+      # , 20
       true
 
 

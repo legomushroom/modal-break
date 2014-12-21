@@ -10,6 +10,7 @@ html
     .input-with-label
       input(id="#{o.id}", type="#{o.type || 'text'}").input-with-label__input
       label(for="#{o.id}").input-with-label__label #{o.placeholder || ''}
+        .input-with-label__label__corner
   body
     include css/icons.svg
 
@@ -26,7 +27,7 @@ html
         .modal__section
           +input({ placeholder: 'username or email', id: 'name', type: 'text' })
         .modal__section
-          +input({ placeholder: 'password', id: 'password', type: 'password' })
+          +input({ placeholder: 'password', id: 'password', type: 'text' })
         .modal__section.grid.grid--sliced.grid--gutter-x2
           .grid-bit.grid-bit--14-20
             button(type="submit") log in

@@ -11,7 +11,7 @@ Main = (function() {
   Main.prototype.vars = function() {};
 
   Main.prototype.listeners = function() {
-    var $breakParts, $close, $protoImage, modal, modalH;
+    var $breakParts, $close, $input, $protoImage, modal, modalH;
     $close = $('#js-close-button');
     modalH = document.querySelector('#js-modal-holder');
     modal = document.querySelector('#js-modal');
@@ -23,13 +23,17 @@ Main = (function() {
       text = $.trim($it.val());
       return $it.toggleClass('is-fill', !!text);
     });
+    $input = null;
+    $close.on('mouseleave touchstart', function() {
+      if ($input != null) {
+        $input.removeClass('is-keep-focus');
+      }
+      return $input = null;
+    });
     $close.on('mouseenter touchstart', function() {
-      var $clone;
+      $input = $('input:focus').addClass('is-keep-focus');
       console.time('render');
-      $clone = $(modal).clone();
-      $(document.body).prepend($clone);
-      console.log($clone[0]);
-      return html2canvas($(modal)[0], {
+      return html2canvas(modal, {
         onrendered: function(canvas) {
           var dataURL;
           dataURL = canvas.toDataURL();
@@ -39,13 +43,11 @@ Main = (function() {
       });
     });
     return $close.on('click', function() {
-      setTimeout(function() {
-        modal.style.display = 'none';
-        return $breakParts.css({
-          'z-index': 2,
-          opacity: 1
-        });
-      }, 20);
+      modal.style.display = 'none';
+      $breakParts.css({
+        'z-index': 2,
+        opacity: 1
+      });
       return true;
     });
   };
