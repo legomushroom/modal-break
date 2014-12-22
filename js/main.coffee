@@ -4,6 +4,12 @@ class Main
     @listeners()
 
   vars:->
+    @$effect = $('#js-effect')
+    @$close = $ '#js-close-button'
+    @$modal = $ '#js-modal'
+    @$protoImage = $ '.js-proto-image'
+    @$breakParts = $('#js-break-parts')
+
     @line1 = $('#js-line1').children()
     @line2 = $('#js-line2').children()
     @line3 = $('#js-line3').children()
@@ -14,14 +20,8 @@ class Main
     @loop()
 
   listeners:->
-    $close = $ '#js-close-button'
-    modalH = document.querySelector '#js-modal-holder'
-    modal  = document.querySelector '#js-modal'
-    $protoImage = $ '.js-proto-image'
 
-    $breakParts = $('#js-break-parts')
-
-    $('.modal').on 'keyup', 'input', (e)->
+    @$modal.on 'keyup', 'input', (e)->
       $it = $(e.target)
       text = $it.val()
       $it.toggleClass 'is-fill', !!text
@@ -32,32 +32,32 @@ class Main
         $it.val text
 
     $input = null
-    $close.on 'mouseleave touchstart', ->
+    @$close.on 'mouseleave touchstart', ->
       $input?.removeClass 'is-keep-focus'
       $input = null
 
-    $close.on 'mouseenter touchstart', ->
+    @$close.on 'mouseenter touchstart', =>
       $input = $('input:focus').addClass 'is-keep-focus'
-      console.time 'render'
-      html2canvas modal,
-        onrendered: (canvas)->
+      # console.time 'render'
+      html2canvas @$modal,
+        onrendered: (canvas)=>
           dataURL = canvas.toDataURL()
-          $protoImage.attr 'xlink:href', dataURL
-          console.timeEnd 'render'
+          @$protoImage.attr 'xlink:href', dataURL
+          # console.timeEnd 'render'
 
-    $close.on 'click', ->
-      modal.style.display = 'none'
-      $breakParts.css
+    @$close.on 'click', =>
+      @$modal.css display: 'none'
+      @$breakParts.css
         'z-index': 2
         opacity: 1
+      @$effect.show()
+      @linesEffect()
       # , 20
       true
 
-    @linesEffect(1000)
-
-  linesEffect:(delay)->
+  linesEffect:(delay=0)->
     it = @
-    @linesT = new TWEEN.Tween(p:0).to(p:1, 500)
+    @linesT = new TWEEN.Tween(p:0).to(p:1, 400)
       .onUpdate ->
         p = @p; nP= 1-p
         for lines, i in it.lines

@@ -9,6 +9,11 @@ Main = (function() {
   }
 
   Main.prototype.vars = function() {
+    this.$effect = $('#js-effect');
+    this.$close = $('#js-close-button');
+    this.$modal = $('#js-modal');
+    this.$protoImage = $('.js-proto-image');
+    this.$breakParts = $('#js-break-parts');
     this.line1 = $('#js-line1').children();
     this.line2 = $('#js-line2').children();
     this.line3 = $('#js-line3').children();
@@ -20,13 +25,8 @@ Main = (function() {
   };
 
   Main.prototype.listeners = function() {
-    var $breakParts, $close, $input, $protoImage, modal, modalH;
-    $close = $('#js-close-button');
-    modalH = document.querySelector('#js-modal-holder');
-    modal = document.querySelector('#js-modal');
-    $protoImage = $('.js-proto-image');
-    $breakParts = $('#js-break-parts');
-    $('.modal').on('keyup', 'input', function(e) {
+    var $input;
+    this.$modal.on('keyup', 'input', function(e) {
       var $it, k, text;
       $it = $(e.target);
       text = $it.val();
@@ -40,43 +40,51 @@ Main = (function() {
       }
     });
     $input = null;
-    $close.on('mouseleave touchstart', function() {
+    this.$close.on('mouseleave touchstart', function() {
       if ($input != null) {
         $input.removeClass('is-keep-focus');
       }
       return $input = null;
     });
-    $close.on('mouseenter touchstart', function() {
-      $input = $('input:focus').addClass('is-keep-focus');
-      console.time('render');
-      return html2canvas(modal, {
-        onrendered: function(canvas) {
-          var dataURL;
-          dataURL = canvas.toDataURL();
-          $protoImage.attr('xlink:href', dataURL);
-          return console.timeEnd('render');
-        }
-      });
-    });
-    $close.on('click', function() {
-      modal.style.display = 'none';
-      $breakParts.css({
-        'z-index': 2,
-        opacity: 1
-      });
-      return true;
-    });
-    return this.linesEffect(1000);
+    this.$close.on('mouseenter touchstart', (function(_this) {
+      return function() {
+        $input = $('input:focus').addClass('is-keep-focus');
+        return html2canvas(_this.$modal, {
+          onrendered: function(canvas) {
+            var dataURL;
+            dataURL = canvas.toDataURL();
+            return _this.$protoImage.attr('xlink:href', dataURL);
+          }
+        });
+      };
+    })(this));
+    return this.$close.on('click', (function(_this) {
+      return function() {
+        _this.$modal.css({
+          display: 'none'
+        });
+        _this.$breakParts.css({
+          'z-index': 2,
+          opacity: 1
+        });
+        _this.$effect.show();
+        _this.linesEffect();
+        return true;
+      };
+    })(this));
   };
 
   Main.prototype.linesEffect = function(delay) {
     var it;
+    if (delay == null) {
+      delay = 0;
+    }
     it = this;
     return this.linesT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
-    }, 500).onUpdate(function() {
+    }, 400).onUpdate(function() {
       var colors, i, j, len, line, lines, nP, p, progress, _i, _len, _ref, _results;
       p = this.p;
       nP = 1 - p;

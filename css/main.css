@@ -1445,6 +1445,7 @@ button--grey,
   top: -7.625rem;
   left: 0.125rem;
   z-index: 3;
+  display: none;
 }
 .modal {
   background: rgba(255,255,255,0.98);
