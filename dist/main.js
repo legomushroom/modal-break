@@ -14,14 +14,19 @@ Main = (function() {
     this.$modal = $('#js-modal');
     this.$protoImage = $('.js-proto-image');
     this.$breakParts = $('#js-break-parts');
+    this.$breakParts = $('#js-break-parts');
+    this.$breakOverlays = this.$breakParts.find('.svg-overlay');
+    this.$breakPart1 = this.$breakOverlays.eq(0);
+    this.$breakPart2 = this.$breakOverlays.eq(1);
+    this.$breakPart3 = this.$breakOverlays.eq(2);
+    this.$breakPart4 = this.$breakOverlays.eq(3);
     this.line1 = $('#js-line1').children();
     this.line2 = $('#js-line2').children();
     this.line3 = $('#js-line3').children();
     this.line4 = $('#js-line4').children();
     this.lines = [];
     this.lines.push(this.line1, this.line2, this.line3, this.line4);
-    this.loop = this.loop.bind(this);
-    return this.loop();
+    return this.loop = this.loop.bind(this);
   };
 
   Main.prototype.listeners = function() {
@@ -75,12 +80,13 @@ Main = (function() {
   };
 
   Main.prototype.linesEffect = function(delay) {
-    var it;
+    var it, shakeOffset;
     if (delay == null) {
       delay = 0;
     }
     it = this;
-    return this.linesT = new TWEEN.Tween({
+    this.loop();
+    this.linesT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
@@ -108,6 +114,52 @@ Main = (function() {
         })());
       }
       return _results;
+    }).delay(delay).start();
+    shakeOffset = 20;
+    this.$breakParts.css({
+      transform: "translate(" + shakeOffset + ", " + shakeOffset + "px)"
+    });
+    this.shakeT = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 350).onUpdate(function() {
+      var nP, p, shake;
+      p = this.p;
+      nP = 1 - p;
+      shake = shakeOffset * nP;
+      it.$breakParts.css({
+        transform: "translate(" + shake + "px, " + shake + "px)"
+      });
+      return it.$effect.css({
+        transform: "translate(" + (-.75 * shake) + "px, " + (-.5 * shake) + "px)"
+      });
+    }).easing(TWEEN.Easing.Elastic.Out).delay(delay).start();
+    return this.shiftT = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 1200).onUpdate(function() {
+      var nP, p, shift, t1, t2, t3, t4;
+      p = this.p;
+      nP = 1 - p;
+      shift = 900 * p;
+      t1 = "translate(" + (-shift) + "px, " + shift + "px) rotate(" + (-50 * p) + "deg)";
+      t2 = "translate(" + (-1270 * p) + "px, " + (500 * p) + "px) rotate(" + (905 * p) + "deg)";
+      t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
+      t4 = "translate(0, " + (800 * p) + "px) rotate(" + (-15 * p) + "deg)";
+      it.$breakPart1.css({
+        transform: t1
+      });
+      it.$breakPart2.css({
+        transform: t2
+      });
+      it.$breakPart3.css({
+        transform: t3
+      });
+      return it.$breakPart4.css({
+        transform: t4
+      });
     }).delay(delay).start();
   };
 

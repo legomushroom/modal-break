@@ -10,6 +10,13 @@ class Main
     @$protoImage = $ '.js-proto-image'
     @$breakParts = $('#js-break-parts')
 
+    @$breakParts    = $('#js-break-parts')
+    @$breakOverlays = @$breakParts.find('.svg-overlay')
+    @$breakPart1 = @$breakOverlays.eq(0)
+    @$breakPart2 = @$breakOverlays.eq(1)
+    @$breakPart3 = @$breakOverlays.eq(2)
+    @$breakPart4 = @$breakOverlays.eq(3)
+
     @line1 = $('#js-line1').children()
     @line2 = $('#js-line2').children()
     @line3 = $('#js-line3').children()
@@ -17,10 +24,9 @@ class Main
     @lines = []
     @lines.push @line1, @line2, @line3, @line4
     @loop = @loop.bind @
-    @loop()
+    # @loop()
 
   listeners:->
-
     @$modal.on 'keyup', 'input', (e)->
       $it = $(e.target)
       text = $it.val()
@@ -56,7 +62,7 @@ class Main
       true
 
   linesEffect:(delay=0)->
-    it = @
+    it = @; @loop()
     @linesT = new TWEEN.Tween(p:0).to(p:1, 400)
       .onUpdate ->
         p = @p; nP= 1-p
@@ -70,6 +76,39 @@ class Main
             line.setAttribute 'stroke-width', 2*nP
       .delay(delay)
       .start()
+
+    shakeOffset = 20
+    @$breakParts.css transform: "translate(#{shakeOffset}, #{shakeOffset}px)"
+    @shakeT = new TWEEN.Tween(p:0).to(p:1, 350)
+      .onUpdate ->
+        p = @p; nP = 1-p
+        shake = shakeOffset*nP
+        it.$breakParts.css transform: "translate(#{shake}px, #{shake}px)"
+        it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
+      .easing TWEEN.Easing.Elastic.Out
+      # .onComplete => @breakParts()
+      .delay(delay)
+      .start()
+
+    @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200)
+      .onUpdate ->
+        p = @p; nP = 1-p
+        shift = 900*p
+        t1 = "translate(#{-shift}px, #{shift}px) rotate(#{-50*p}deg)"
+        t2 = "translate(#{-1270*p}px, #{500*p}px) rotate(#{905*p}deg)"
+        t3 = "translate(#{1100*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
+        t4 = "translate(0, #{800*p}px) rotate(#{-15*p}deg)"
+        it.$breakPart1.css transform: t1
+        it.$breakPart2.css transform: t2
+        it.$breakPart3.css transform: t3
+        it.$breakPart4.css transform: t4
+      # .easing( TWEEN.Easing.Quadratic.Out )
+      .delay(delay)
+      .start()
+
+  # breakParts:(delay=0)->
+  #   it = @
+    
 
   loop:->
     requestAnimationFrame(@loop)

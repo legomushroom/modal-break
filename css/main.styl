@@ -38,6 +38,8 @@ button, .button
 modalHeight = 45*gs
 modalWidth  = 48*gs
 .modal-holder
+  // transform rotate(5deg)
+  // transform-origin 90% 5%
   position absolute
   width  modalWidth
   height modalHeight
@@ -63,6 +65,7 @@ modalWidth  = 48*gs
     left 2*PX
     z-index 3
     display none
+    backface-visibility hidden
   
 .modal
   background rgba(#fff,.98)
@@ -165,6 +168,11 @@ modalWidth  = 48*gs
   background rgba(c-black,.75)
 
 .svg-overlay
+  backface-visibility hidden
+  &--2
+    transform-origin 96% 2%
+  &--3
+    transform-origin 97% 6%
   svg
     rect 100%
     nw 0
