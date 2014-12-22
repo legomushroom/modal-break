@@ -15,28 +15,43 @@ html
     include css/icons.svg
 
     //- iframe(src="http://www.deepeastmusic.com/", style="width:100%;height:900px")
-    .modal-overlay
+    .modal-overlay#js-modal-overlay
 
     .modal-holder#js-modal-holder
-      .effect#js-effect
-        svg(viewBox="0 0 600 600", height="600", width="600")
-          - var strokeWidth = 2
-          g#js-line1
-            line(x1="450", x2="600", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-            line(x1="450", x2="600", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-            line(x1="450", x2="600", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          g#js-line2
-            line(x1="450", x2="0", y1="150", y2="600", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
-            line(x1="450", x2="0", y1="150", y2="600", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
-            line(x1="450", x2="0", y1="150", y2="600", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
-          g#js-line3
-            line(x1="450", x2="300", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-            line(x1="450", x2="300", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-            line(x1="450", x2="300", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          g#js-line4
-            line(x1="450", x2="600", y1="150", y2="300", stroke-width="#{strokeWidth}", stroke="red",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-            line(x1="450", x2="600", y1="150", y2="300", stroke-width="#{strokeWidth}", stroke="red",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-            line(x1="450", x2="600", y1="150", y2="300", stroke-width="#{strokeWidth}", stroke="red",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+      .effect#js-effect(style="outline1: 1px solid red")
+        .effect__line.effect__line--1
+          - var len = 900
+          svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
+            defs
+              g.js-line#proto-line
+                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len}", stroke-dashoffset="#{len}")
+                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len}", stroke-dashoffset="#{len}")
+                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len}", stroke-dashoffset="#{len}")
+            use(xlink:href="#proto-line", width="4", height="#{len}")
+        .effect__line.effect__line--2
+          svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
+            use(xlink:href="#proto-line", width="4", height="#{len}")
+        .effect__line.effect__line--3
+          svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
+            use(xlink:href="#proto-line", width="4", height="#{len}")
+
+        .effect__line.effect__line--4
+          svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
+            use(xlink:href="#proto-line", width="4", height="#{len}")
+
+
+          //- g#js-line2
+          //-   line(x1="450", x2="0", y1="150", y2="600", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
+          //-   line(x1="450", x2="0", y1="150", y2="600", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
+          //-   line(x1="450", x2="0", y1="150", y2="600", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
+          //- g#js-line3
+          //-   line(x1="450", x2="300", y1="150", y2="0", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          //-   line(x1="450", x2="300", y1="150", y2="0", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          //-   line(x1="450", x2="300", y1="150", y2="0", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          //- g#js-line4
+          //-   line(x1="450", x2="600", y1="150", y2="300",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          //-   line(x1="450", x2="600", y1="150", y2="300",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          //-   line(x1="450", x2="600", y1="150", y2="300",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
           
       form1(action="").modal#js-modal
         .modal__close#js-close-button

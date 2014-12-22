@@ -14,19 +14,16 @@ Main = (function() {
     this.$modal = $('#js-modal');
     this.$protoImage = $('.js-proto-image');
     this.$breakParts = $('#js-break-parts');
+    this.$modalOverlay = $('#js-modal-overlay');
     this.$breakParts = $('#js-break-parts');
     this.$breakOverlays = this.$breakParts.find('.svg-overlay');
     this.$breakPart1 = this.$breakOverlays.eq(0);
     this.$breakPart2 = this.$breakOverlays.eq(1);
     this.$breakPart3 = this.$breakOverlays.eq(2);
     this.$breakPart4 = this.$breakOverlays.eq(3);
-    this.line1 = $('#js-line1').children();
-    this.line2 = $('#js-line2').children();
-    this.line3 = $('#js-line3').children();
-    this.line4 = $('#js-line4').children();
-    this.lines = [];
-    this.lines.push(this.line1, this.line2, this.line3, this.line4);
-    return this.loop = this.loop.bind(this);
+    this.$lines = $('.js-line').children();
+    this.loop = this.loop.bind(this);
+    return this.linesEffect();
   };
 
   Main.prototype.listeners = function() {
@@ -73,48 +70,45 @@ Main = (function() {
           opacity: 1
         });
         _this.$effect.show();
-        _this.linesEffect();
+        _this.launchEffects();
         return true;
       };
     })(this));
   };
 
   Main.prototype.linesEffect = function(delay) {
-    var it, shakeOffset;
+    var colors, it, len, shakeOffset;
     if (delay == null) {
       delay = 0;
     }
     it = this;
-    this.loop();
+    len = 900;
+    colors = ['yellow', 'hotpink', 'cyan'];
     this.linesT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
-    }, 400).onUpdate(function() {
-      var colors, i, j, len, line, lines, nP, p, progress, _i, _len, _ref, _results;
+    }, 450).onUpdate(function() {
+      var i, line, nP, p, progress, _i, _len, _ref, _results;
       p = this.p;
       nP = 1 - p;
-      _ref = it.lines;
+      progress = (2 * len) * nP + len;
+      _ref = it.$lines;
       _results = [];
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-        lines = _ref[i];
-        len = parseInt(lines[0].getAttribute('stroke-dasharray'), 10);
-        progress = ((2 * len) * nP) - len;
-        colors = ['yellow', 'hotpink', 'cyan'];
-        _results.push((function() {
-          var _j, _len1, _results1;
-          _results1 = [];
-          for (j = _j = 0, _len1 = lines.length; _j < _len1; j = ++_j) {
-            line = lines[j];
-            line.setAttribute('stroke-dashoffset', progress + (j * 100) * nP);
-            line.setAttribute('stroke', colors[j]);
-            _results1.push(line.setAttribute('stroke-width', 2 * nP));
-          }
-          return _results1;
-        })());
+        line = _ref[i];
+        line.setAttribute('stroke-dashoffset', progress + (i * 100) * nP - (2 * i * 100) * p);
+        line.setAttribute('stroke', colors[i]);
+        _results.push(line.setAttribute('stroke-width', 2 * nP));
       }
       return _results;
-    }).delay(delay).start();
+    }).onComplete((function(_this) {
+      return function() {
+        return _this.$effect.css({
+          display: 'none'
+        });
+      };
+    })(this)).delay(delay);
     shakeOffset = 20;
     this.$breakParts.css({
       transform: "translate(" + shakeOffset + ", " + shakeOffset + "px)"
@@ -134,7 +128,7 @@ Main = (function() {
       return it.$effect.css({
         transform: "translate(" + (-.75 * shake) + "px, " + (-.5 * shake) + "px)"
       });
-    }).easing(TWEEN.Easing.Elastic.Out).delay(delay).start();
+    }).easing(TWEEN.Easing.Elastic.Out).delay(delay);
     return this.shiftT = new TWEEN.Tween({
       p: 0
     }).to({
@@ -157,10 +151,27 @@ Main = (function() {
       it.$breakPart3.css({
         transform: t3
       });
-      return it.$breakPart4.css({
+      it.$breakPart4.css({
         transform: t4
       });
-    }).delay(delay).start();
+      return it.$modalOverlay.css({
+        transform: "translate(0, " + (50 * p) + ")",
+        opacity: nP
+      });
+    }).onComplete((function(_this) {
+      return function() {
+        return _this.$modalOverlay.css({
+          display: 'none'
+        });
+      };
+    })(this)).delay(delay);
+  };
+
+  Main.prototype.launchEffects = function() {
+    this.loop();
+    this.linesT.start();
+    this.shiftT.start();
+    return this.shakeT.start();
   };
 
   Main.prototype.loop = function() {

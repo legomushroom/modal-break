@@ -59,14 +59,32 @@ modalWidth  = 48*gs
     position absolute
     z-index 1
   .effect
-    rect 600*PX
+    // width 2*PX
+    // height 450*PX
     position absolute
     top -12.2*gs
     left 2*PX
     z-index 3
     display none
+
+.effect
+  &__line
     backface-visibility hidden
-  
+    position absolute
+    height 900*PX
+    width 4*PX
+    left 44.5*gs + 4*PX
+    top  15*gs + 0*PX
+    transform-origin 50% 0
+    &--1
+      transform rotate(45deg)
+    &--2
+      transform rotate(-45deg)
+    &--3
+      transform rotate(-135deg)
+    &--4
+      transform rotate(-225deg)
+
 .modal
   background rgba(#fff,.98)
   border-radius: 7*PX

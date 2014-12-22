@@ -12,31 +12,36 @@
     <path d="M1.79,31.999l-1.776-1.777L30.208,0.001l1.778,1.777L1.79,31.999z"/>
   </g>
 </svg>
-    <div class="modal-overlay"></div>
+    <div id="js-modal-overlay" class="modal-overlay"></div>
     <div id="js-modal-holder" class="modal-holder">
-      <div id="js-effect" class="effect">
-        <svg viewBox="0 0 600 600" height="600" width="600">
-          <g id="js-line1">
-            <line x1="450" x2="600" y1="150" y2="0" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-            <line x1="450" x2="600" y1="150" y2="0" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-            <line x1="450" x2="600" y1="150" y2="0" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-          </g>
-          <g id="js-line2">
-            <line x1="450" x2="0" y1="150" y2="600" stroke-width="2" stroke="red" stroke-dasharray="636.396103068" stroke-dashoffset="636.396103068"></line>
-            <line x1="450" x2="0" y1="150" y2="600" stroke-width="2" stroke="red" stroke-dasharray="636.396103068" stroke-dashoffset="636.396103068"></line>
-            <line x1="450" x2="0" y1="150" y2="600" stroke-width="2" stroke="red" stroke-dasharray="636.396103068" stroke-dashoffset="636.396103068"></line>
-          </g>
-          <g id="js-line3">
-            <line x1="450" x2="300" y1="150" y2="0" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-            <line x1="450" x2="300" y1="150" y2="0" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-            <line x1="450" x2="300" y1="150" y2="0" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-          </g>
-          <g id="js-line4">
-            <line x1="450" x2="600" y1="150" y2="300" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-            <line x1="450" x2="600" y1="150" y2="300" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-            <line x1="450" x2="600" y1="150" y2="300" stroke-width="2" stroke="red" stroke-dasharray="212.13203435596427" stroke-dashoffset="212.13203435596427"></line>
-          </g>
-        </svg>
+      <div id="js-effect" style="outline1: 1px solid red" class="effect">
+        <div class="effect__line effect__line--1">
+          <svg viewBox="0 0 4 900" width="4" height="900">
+            <defs>
+              <g id="proto-line" class="js-line">
+                <line x1="2" x2="2" y1="0" y2="900" stroke="red" stroke-dasharray="900" stroke-dashoffset="900"></line>
+                <line x1="2" x2="2" y1="0" y2="900" stroke="red" stroke-dasharray="900" stroke-dashoffset="900"></line>
+                <line x1="2" x2="2" y1="0" y2="900" stroke="red" stroke-dasharray="900" stroke-dashoffset="900"></line>
+              </g>
+            </defs>
+            <use xlink:href="#proto-line" width="4" height="900"></use>
+          </svg>
+        </div>
+        <div class="effect__line effect__line--2">
+          <svg viewBox="0 0 4 900" width="4" height="900">
+            <use xlink:href="#proto-line" width="4" height="900"></use>
+          </svg>
+        </div>
+        <div class="effect__line effect__line--3">
+          <svg viewBox="0 0 4 900" width="4" height="900">
+            <use xlink:href="#proto-line" width="4" height="900"></use>
+          </svg>
+        </div>
+        <div class="effect__line effect__line--4">
+          <svg viewBox="0 0 4 900" width="4" height="900">
+            <use xlink:href="#proto-line" width="4" height="900"></use>
+          </svg>
+        </div>
       </div>
       <form1 action="" id="js-modal" class="modal">
         <div id="js-close-button" class="modal__close">

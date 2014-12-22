@@ -4,11 +4,12 @@ class Main
     @listeners()
 
   vars:->
-    @$effect = $('#js-effect')
-    @$close = $ '#js-close-button'
-    @$modal = $ '#js-modal'
-    @$protoImage = $ '.js-proto-image'
-    @$breakParts = $('#js-break-parts')
+    @$effect  = $('#js-effect')
+    @$close   = $ '#js-close-button'
+    @$modal   = $ '#js-modal'
+    @$protoImage    = $ '.js-proto-image'
+    @$breakParts    = $('#js-break-parts')
+    @$modalOverlay  = $('#js-modal-overlay')
 
     @$breakParts    = $('#js-break-parts')
     @$breakOverlays = @$breakParts.find('.svg-overlay')
@@ -17,13 +18,14 @@ class Main
     @$breakPart3 = @$breakOverlays.eq(2)
     @$breakPart4 = @$breakOverlays.eq(3)
 
-    @line1 = $('#js-line1').children()
-    @line2 = $('#js-line2').children()
-    @line3 = $('#js-line3').children()
-    @line4 = $('#js-line4').children()
-    @lines = []
-    @lines.push @line1, @line2, @line3, @line4
+    # @line1 = $('#js-line1').children()
+    # @line2 = $('#js-line2').children()
+    # @line3 = $('#js-line3').children()
+    # @line4 = $('#js-line4').children()
+    # @lines = []
+    @$lines =  $('.js-line').children()
     @loop = @loop.bind @
+    @linesEffect()
     # @loop()
 
   listeners:->
@@ -57,25 +59,23 @@ class Main
         'z-index': 2
         opacity: 1
       @$effect.show()
-      @linesEffect()
+      @launchEffects()
       # , 20
       true
 
   linesEffect:(delay=0)->
-    it = @; @loop()
-    @linesT = new TWEEN.Tween(p:0).to(p:1, 400)
+    it = @
+    len = 900; colors = ['yellow', 'hotpink', 'cyan']
+    @linesT = new TWEEN.Tween(p:0).to(p:1, 450)
       .onUpdate ->
-        p = @p; nP= 1-p
-        for lines, i in it.lines
-          len = parseInt lines[0].getAttribute('stroke-dasharray'), 10
-          progress = ((2*len)*nP) - len
-          colors = ['yellow', 'hotpink', 'cyan']
-          for line, j in lines
-            line.setAttribute 'stroke-dashoffset', progress + (j*100)*nP
-            line.setAttribute 'stroke', colors[j]
-            line.setAttribute 'stroke-width', 2*nP
+        p = @p; nP= 1-p; progress = (2*len)*nP + len
+        for line, i in it.$lines
+          line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP-(2*i*100)*p
+          line.setAttribute 'stroke', colors[i]
+          line.setAttribute 'stroke-width', 2*nP
+      .onComplete => @$effect.css       display: 'none'
       .delay(delay)
-      .start()
+      # .start()
 
     shakeOffset = 20
     @$breakParts.css transform: "translate(#{shakeOffset}, #{shakeOffset}px)"
@@ -88,7 +88,7 @@ class Main
       .easing TWEEN.Easing.Elastic.Out
       # .onComplete => @breakParts()
       .delay(delay)
-      .start()
+      # .start()
 
     @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200)
       .onUpdate ->
@@ -102,13 +102,19 @@ class Main
         it.$breakPart2.css transform: t2
         it.$breakPart3.css transform: t3
         it.$breakPart4.css transform: t4
-      # .easing( TWEEN.Easing.Quadratic.Out )
-      .delay(delay)
-      .start()
 
-  # breakParts:(delay=0)->
-  #   it = @
-    
+        it.$modalOverlay.css
+          transform:  "translate(0, #{50*p})"
+          opacity:    nP
+      # .easing( TWEEN.Easing.Quadratic.Out )
+      .onComplete =>
+        @$modalOverlay.css display: 'none'
+        # @$effect.css       display: 'none'
+      .delay(delay)
+      # .start()
+
+  launchEffects:->
+    @loop(); @linesT.start(); @shiftT.start(); @shakeT.start()
 
   loop:->
     requestAnimationFrame(@loop)

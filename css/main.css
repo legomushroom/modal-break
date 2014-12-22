@@ -1439,16 +1439,44 @@ button--grey,
   z-index: 1;
 }
 .modal-holder .effect {
-  width: 37.5rem;
-  height: 37.5rem;
   position: absolute;
   top: -7.625rem;
   left: 0.125rem;
   z-index: 3;
   display: none;
+}
+.effect__line {
   -webkit-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
   backface-visibility: hidden;
+  position: absolute;
+  height: 56.25rem;
+  width: 0.25rem;
+  left: 28.0625rem;
+  top: 9.375rem;
+  -webkit-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+}
+.effect__line--1 {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.effect__line--2 {
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.effect__line--3 {
+  -webkit-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.effect__line--4 {
+  -webkit-transform: rotate(-225deg);
+  -ms-transform: rotate(-225deg);
+  transform: rotate(-225deg);
 }
 .modal {
   background: rgba(255,255,255,0.98);
