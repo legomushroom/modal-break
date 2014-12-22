@@ -14,10 +14,29 @@ html
   body
     include css/icons.svg
 
-    iframe(src="http://www.deepeastmusic.com/", style="width:100%;height:900px")
+    //- iframe(src="http://www.deepeastmusic.com/", style="width:100%;height:900px")
     .modal-overlay
 
     .modal-holder#js-modal-holder
+      svg(viewBox="0 0 600 600", height="600", width="600").effect
+        - var strokeWidth = 2
+        g#js-line1
+          line(x1="450", x2="600", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          line(x1="450", x2="600", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          line(x1="450", x2="600", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+        g#js-line2
+          line(x1="450", x2="0", y1="150", y2="600", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
+          line(x1="450", x2="0", y1="150", y2="600", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
+          line(x1="450", x2="0", y1="150", y2="600", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
+        g#js-line3
+          line(x1="450", x2="300", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          line(x1="450", x2="300", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          line(x1="450", x2="300", y1="150", y2="0", stroke-width="#{strokeWidth}", stroke="red", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+        g#js-line4
+          line(x1="450", x2="600", y1="150", y2="300", stroke-width="#{strokeWidth}", stroke="red",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          line(x1="450", x2="600", y1="150", y2="300", stroke-width="#{strokeWidth}", stroke="red",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+          line(x1="450", x2="600", y1="150", y2="300", stroke-width="#{strokeWidth}", stroke="red",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
+        
       form1(action="").modal#js-modal
         .modal__close#js-close-button
           - var el = { path: 'close-icon', class: '', id: ''} 
@@ -36,26 +55,22 @@ html
 
       svg(style="display:none")
         image(width="480", height="450", xlink:href="")#proto-image.js-proto-image
-
       .break-parts#js-break-parts
         .svg-overlay
           svg(viewBox="0 0 480 450")#js-svg1
             clipPath#clip1
               path(d="M0,450.575574 L0,0 L424.903452,0 L452.375,28.5599486 L20.5087638,460.426185 L0,450.575574 Z")
             use(xlink:href="#proto-image", clip-path="url(#clip1)")#js-image1
-
         .svg-overlay
           svg(viewBox="0 0 480 450")#js-svg2
             clipPath#clip2
               path(d="M452.214614,28.6494713 L424.309513,0 L482.040672,0 L452.214614,28.6494713 Z")
             use(xlink:href="#proto-image", clip-path="url(#clip2)")#js-image2
-
         .svg-overlay
           svg(viewBox="0 0 480 450")#js-svg3
             clipPath#clip3
               path(d="M452.320312,28.526424 L482,58 L482,0.066291362 L452.320312,28.526424 Z")
             use(xlink:href="#proto-image", clip-path="url(#clip3)")#js-image3
-
         .svg-overlay
           svg(viewBox="0 0 480 450")#js-svg4
             clipPath#clip4
@@ -83,6 +98,7 @@ html
       //-   image(width="480", height="450", xlink:href="", clip-path="url(#clip4)")#js-image4
 
     script(src="js/jquery-2.1.3.min.js")
+    script(src="js/tween.js")
     script(src="js/html2canvas.js")
     script(src="dist/main.js")
 

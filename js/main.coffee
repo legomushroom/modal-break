@@ -4,20 +4,20 @@ class Main
     @listeners()
 
   vars:->
+    @line1 = $('#js-line1').children()
+    @line2 = $('#js-line2').children()
+    @line3 = $('#js-line3').children()
+    @line4 = $('#js-line4').children()
+    @lines = []
+    @lines.push @line1, @line2, @line3, @line4
+    @loop = @loop.bind @
+    @loop()
 
   listeners:->
     $close = $ '#js-close-button'
     modalH = document.querySelector '#js-modal-holder'
     modal  = document.querySelector '#js-modal'
-    # svg1   = document.querySelector '#js-svg1'
-    # svg2   = document.querySelector '#js-svg2'
-    # svg3   = document.querySelector '#js-svg3'
-    # svg4   = document.querySelector '#js-svg4'
     $protoImage = $ '.js-proto-image'
-    # image1 = document.querySelector '#js-image1'
-    # image2 = document.querySelector '#js-image2'
-    # image3 = document.querySelector '#js-image3'
-    # image4 = document.querySelector '#js-image4'
 
     $breakParts = $('#js-break-parts')
 
@@ -43,13 +43,7 @@ class Main
         onrendered: (canvas)->
           dataURL = canvas.toDataURL()
           $protoImage.attr 'xlink:href', dataURL
-          # image1.setAttribute 'xlink:href', dataURL
-          # image2.setAttribute 'xlink:href', dataURL
-          # image3.setAttribute 'xlink:href', dataURL
-          # image4.setAttribute 'xlink:href', dataURL
           console.timeEnd 'render'
-
-
 
     $close.on 'click', ->
       modal.style.display = 'none'
@@ -59,5 +53,28 @@ class Main
       # , 20
       true
 
+    @linesEffect(1000)
+
+  linesEffect:(delay)->
+    it = @
+    @linesT = new TWEEN.Tween(p:0).to(p:1, 500)
+      .onUpdate ->
+        p = @p; nP= 1-p
+        for lines, i in it.lines
+          len = parseInt lines[0].getAttribute('stroke-dasharray'), 10
+          progress = ((2*len)*nP) - len
+          colors = ['yellow', 'hotpink', 'cyan']
+          for line, j in lines
+            line.setAttribute 'stroke-dashoffset', progress + (j*100)*nP
+            line.setAttribute 'stroke', colors[j]
+            line.setAttribute 'stroke-width', 2*nP
+      .delay(delay)
+      .start()
+
+  loop:->
+    requestAnimationFrame(@loop)
+    TWEEN.update()
 
 new Main
+
+

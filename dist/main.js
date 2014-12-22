@@ -8,7 +8,16 @@ Main = (function() {
     this.listeners();
   }
 
-  Main.prototype.vars = function() {};
+  Main.prototype.vars = function() {
+    this.line1 = $('#js-line1').children();
+    this.line2 = $('#js-line2').children();
+    this.line3 = $('#js-line3').children();
+    this.line4 = $('#js-line4').children();
+    this.lines = [];
+    this.lines.push(this.line1, this.line2, this.line3, this.line4);
+    this.loop = this.loop.bind(this);
+    return this.loop();
+  };
 
   Main.prototype.listeners = function() {
     var $breakParts, $close, $input, $protoImage, modal, modalH;
@@ -49,7 +58,7 @@ Main = (function() {
         }
       });
     });
-    return $close.on('click', function() {
+    $close.on('click', function() {
       modal.style.display = 'none';
       $breakParts.css({
         'z-index': 2,
@@ -57,6 +66,46 @@ Main = (function() {
       });
       return true;
     });
+    return this.linesEffect(1000);
+  };
+
+  Main.prototype.linesEffect = function(delay) {
+    var it;
+    it = this;
+    return this.linesT = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 500).onUpdate(function() {
+      var colors, i, j, len, line, lines, nP, p, progress, _i, _len, _ref, _results;
+      p = this.p;
+      nP = 1 - p;
+      _ref = it.lines;
+      _results = [];
+      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+        lines = _ref[i];
+        len = parseInt(lines[0].getAttribute('stroke-dasharray'), 10);
+        progress = ((2 * len) * nP) - len;
+        colors = ['yellow', 'hotpink', 'cyan'];
+        _results.push((function() {
+          var _j, _len1, _results1;
+          _results1 = [];
+          for (j = _j = 0, _len1 = lines.length; _j < _len1; j = ++_j) {
+            line = lines[j];
+            line.setAttribute('stroke-dashoffset', progress + (j * 100) * nP);
+            line.setAttribute('stroke', colors[j]);
+            _results1.push(line.setAttribute('stroke-width', 2 * nP));
+          }
+          return _results1;
+        })());
+      }
+      return _results;
+    }).delay(delay).start();
+  };
+
+  Main.prototype.loop = function() {
+    requestAnimationFrame(this.loop);
+    return TWEEN.update();
   };
 
   return Main;

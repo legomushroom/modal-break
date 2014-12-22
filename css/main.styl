@@ -18,8 +18,6 @@ BR = 6*PX
 body
   font-family OpenSans, -moz-use-system-font
 
-  // background hotpink
-
 button, .button
   border 0
   width 100%
@@ -58,6 +56,13 @@ modalWidth  = 48*gs
   .modal
     position absolute
     z-index 1
+  .effect
+    rect 600*PX
+    position absolute
+    top -12.2*gs
+    left 2*PX
+    z-index 3
+    // display none
   
 .modal
   background rgba(#fff,.98)
@@ -97,8 +102,8 @@ modalWidth  = 48*gs
     margin-top 2*gs
     fly()
     &:last-of-type
-      margin-top 3*gs 
-  
+      margin-top 3*gs
+
 .input-with-label
   text-align left
   position relative
@@ -158,6 +163,8 @@ modalWidth  = 48*gs
   overflow hidden
   nw 0
   background rgba(c-black,.75)
+
+.svg-overlay
   svg
     rect 100%
     nw 0
