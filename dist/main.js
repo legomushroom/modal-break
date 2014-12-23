@@ -103,7 +103,7 @@ Main = (function() {
       }
       return it.$circle.attr({
         'r': 11 * p,
-        'stroke-width': 5 * nP,
+        'stroke-width': 7 * nP,
         'fill': "rgba(" + (~~(0 + 255 * p)) + "," + (~~(255 - 153 * p)) + "," + (~~(255 - 75 * p)) + ", " + nP + ")"
       });
     }).onComplete((function(_this) {
