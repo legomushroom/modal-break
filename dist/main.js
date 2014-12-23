@@ -15,6 +15,7 @@ Main = (function() {
     this.$protoImage = $('.js-proto-image');
     this.$breakParts = $('#js-break-parts');
     this.$modalOverlay = $('#js-modal-overlay');
+    this.$circle = $('#js-circle');
     this.$breakParts = $('#js-break-parts');
     this.$breakOverlays = this.$breakParts.find('.svg-overlay');
     this.$breakPart1 = this.$breakOverlays.eq(0);
@@ -89,19 +90,22 @@ Main = (function() {
     }).to({
       p: 1
     }, 450).onUpdate(function() {
-      var i, line, nP, p, progress, _i, _len, _ref, _results;
+      var i, line, nP, p, progress, _i, _len, _ref;
       p = this.p;
       nP = 1 - p;
       progress = (2 * len) * nP + len;
       _ref = it.$lines;
-      _results = [];
       for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
         line = _ref[i];
-        line.setAttribute('stroke-dashoffset', progress + (i * 100) * nP - (2 * i * 100) * p);
+        line.setAttribute('stroke-dashoffset', progress + (i * 100) * nP);
         line.setAttribute('stroke', colors[i]);
-        _results.push(line.setAttribute('stroke-width', 2 * nP));
+        line.setAttribute('stroke-width', 2 * nP);
       }
-      return _results;
+      return it.$circle.attr({
+        'r': 11 * p,
+        'stroke-width': 5 * nP,
+        'fill': "rgba(" + (~~(0 + 255 * p)) + "," + (~~(255 - 153 * p)) + "," + (~~(255 - 75 * p)) + ", " + nP + ")"
+      });
     }).onComplete((function(_this) {
       return function() {
         return _this.$effect.css({
@@ -110,9 +114,6 @@ Main = (function() {
       };
     })(this)).delay(delay);
     shakeOffset = 20;
-    this.$breakParts.css({
-      transform: "translate(" + shakeOffset + ", " + shakeOffset + "px)"
-    });
     this.shakeT = new TWEEN.Tween({
       p: 0
     }).to({
@@ -141,7 +142,7 @@ Main = (function() {
       t1 = "translate(" + (-shift) + "px, " + shift + "px) rotate(" + (-50 * p) + "deg)";
       t2 = "translate(" + (-1270 * p) + "px, " + (500 * p) + "px) rotate(" + (905 * p) + "deg)";
       t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
-      t4 = "translate(0, " + (800 * p) + "px) rotate(" + (-15 * p) + "deg)";
+      t4 = "translate(0, " + (1000 * p) + "px) rotate(" + (-15 * p) + "deg)";
       it.$breakPart1.css({
         transform: t1
       });

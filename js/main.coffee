@@ -11,6 +11,8 @@ class Main
     @$breakParts    = $('#js-break-parts')
     @$modalOverlay  = $('#js-modal-overlay')
 
+    @$circle = $('#js-circle')
+
     @$breakParts    = $('#js-break-parts')
     @$breakOverlays = @$breakParts.find('.svg-overlay')
     @$breakPart1 = @$breakOverlays.eq(0)
@@ -18,15 +20,9 @@ class Main
     @$breakPart3 = @$breakOverlays.eq(2)
     @$breakPart4 = @$breakOverlays.eq(3)
 
-    # @line1 = $('#js-line1').children()
-    # @line2 = $('#js-line2').children()
-    # @line3 = $('#js-line3').children()
-    # @line4 = $('#js-line4').children()
-    # @lines = []
     @$lines =  $('.js-line').children()
     @loop = @loop.bind @
     @linesEffect()
-    # @loop()
 
   listeners:->
     @$modal.on 'keyup', 'input', (e)->
@@ -46,12 +42,10 @@ class Main
 
     @$close.on 'mouseenter touchstart', =>
       $input = $('input:focus').addClass 'is-keep-focus'
-      # console.time 'render'
       html2canvas @$modal,
         onrendered: (canvas)=>
           dataURL = canvas.toDataURL()
           @$protoImage.attr 'xlink:href', dataURL
-          # console.timeEnd 'render'
 
     @$close.on 'click', =>
       @$modal.css display: 'none'
@@ -60,7 +54,6 @@ class Main
         opacity: 1
       @$effect.show()
       @launchEffects()
-      # , 20
       true
 
   linesEffect:(delay=0)->
@@ -70,15 +63,19 @@ class Main
       .onUpdate ->
         p = @p; nP= 1-p; progress = (2*len)*nP + len
         for line, i in it.$lines
-          line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP-(2*i*100)*p
+          line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP
           line.setAttribute 'stroke', colors[i]
           line.setAttribute 'stroke-width', 2*nP
+
+        it.$circle.attr
+          'r': 11*p
+          'stroke-width': 5*nP
+          'fill': "rgba(#{~~(0+255*p)},#{~~(255-153*p)},#{~~(255-75*p)}, #{nP})"
+
       .onComplete => @$effect.css       display: 'none'
       .delay(delay)
-      # .start()
 
     shakeOffset = 20
-    @$breakParts.css transform: "translate(#{shakeOffset}, #{shakeOffset}px)"
     @shakeT = new TWEEN.Tween(p:0).to(p:1, 350)
       .onUpdate ->
         p = @p; nP = 1-p
@@ -86,9 +83,7 @@ class Main
         it.$breakParts.css transform: "translate(#{shake}px, #{shake}px)"
         it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
       .easing TWEEN.Easing.Elastic.Out
-      # .onComplete => @breakParts()
       .delay(delay)
-      # .start()
 
     @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200)
       .onUpdate ->
@@ -97,21 +92,16 @@ class Main
         t1 = "translate(#{-shift}px, #{shift}px) rotate(#{-50*p}deg)"
         t2 = "translate(#{-1270*p}px, #{500*p}px) rotate(#{905*p}deg)"
         t3 = "translate(#{1100*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
-        t4 = "translate(0, #{800*p}px) rotate(#{-15*p}deg)"
+        t4 = "translate(0, #{1000*p}px) rotate(#{-15*p}deg)"
         it.$breakPart1.css transform: t1
         it.$breakPart2.css transform: t2
         it.$breakPart3.css transform: t3
         it.$breakPart4.css transform: t4
-
         it.$modalOverlay.css
           transform:  "translate(0, #{50*p})"
           opacity:    nP
-      # .easing( TWEEN.Easing.Quadratic.Out )
-      .onComplete =>
-        @$modalOverlay.css display: 'none'
-        # @$effect.css       display: 'none'
+      .onComplete => @$modalOverlay.css display: 'none'
       .delay(delay)
-      # .start()
 
   launchEffects:->
     @loop(); @linesT.start(); @shiftT.start(); @shakeT.start()

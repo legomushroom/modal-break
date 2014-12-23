@@ -1445,6 +1445,16 @@ button--grey,
   z-index: 3;
   display: none;
 }
+.effect__circle {
+  position: absolute;
+  left: 25rem;
+  top: 6.25rem;
+  width: 6.25rem;
+  height: 6.25rem;
+  -webkit-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 .effect__line {
   -webkit-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
