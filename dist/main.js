@@ -29,8 +29,17 @@ Main = (function() {
     return this.linesEffect();
   };
 
+  Main.prototype.showModal = function() {
+    return this.showModalT.start();
+  };
+
   Main.prototype.listeners = function() {
     var $input;
+    this.$showModal.on('click', (function(_this) {
+      return function() {
+        return _this.showModal();
+      };
+    })(this));
     this.$modal.on('keyup', 'input', function(e) {
       var $it, k, text;
       $it = $(e.target);
@@ -132,7 +141,7 @@ Main = (function() {
         transform: "translate(" + (-.75 * shake) + "px, " + (-.5 * shake) + "px)"
       });
     }).easing(TWEEN.Easing.Elastic.Out).delay(delay);
-    return this.shiftT = new TWEEN.Tween({
+    this.shiftT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
@@ -174,6 +183,61 @@ Main = (function() {
         });
       };
     })(this)).delay(delay);
+    return this.showModalT = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 800).easing(TWEEN.Easing.Exponential.Out).onStart((function(_this) {
+      return function() {
+        _this.shiftT.stop();
+        _this.shakeT.stop();
+        _this.linesT.stop();
+        _this.$modal.css({
+          display: 'block',
+          opacity: 0
+        });
+        _this.$breakParts.css({
+          display: 'block'
+        });
+        _this.$modalHolder.css({
+          display: 'block'
+        });
+        _this.$modalOverlay.css({
+          display: 'block',
+          opacity: 0
+        });
+        _this.$breakPart1.css({
+          transform: 'none'
+        });
+        _this.$breakPart2.css({
+          transform: 'none'
+        });
+        _this.$breakPart3.css({
+          transform: 'none'
+        });
+        _this.$breakPart4.css({
+          transform: 'none'
+        });
+        _this.$modal.css({
+          display: 'block'
+        });
+        return _this.$breakParts.css({
+          'z-index': 0,
+          opacity: 0
+        });
+      };
+    })(this)).onUpdate(function() {
+      var nP, p;
+      p = this.p;
+      nP = 1 - p;
+      it.$modal.css({
+        opacity: p,
+        transform: "translateY(" + (15 * nP) + "px)"
+      });
+      return it.$modalOverlay.css({
+        opacity: p
+      });
+    });
   };
 
   Main.prototype.launchEffects = function() {

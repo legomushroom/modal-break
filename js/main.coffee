@@ -27,7 +27,12 @@ class Main
     @loop = @loop.bind @
     @linesEffect()
 
+  showModal:->
+    @showModalT.start()
+
   listeners:->
+    @$showModal.on 'click', => @showModal()
+
     @$modal.on 'keyup', 'input', (e)->
       $it = $(e.target)
       text = $it.val()
@@ -64,12 +69,12 @@ class Main
     len = 900; colors = ['yellow', 'hotpink', 'cyan']
     @linesT = new TWEEN.Tween(p:0).to(p:1, 450)
       .onUpdate ->
+        # console.log it.linesT.progress()
         p = @p; nP= 1-p; progress = (2*len)*nP + len
         for line, i in it.$lines
           line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP
-          line.setAttribute 'stroke', colors[i]
-          line.setAttribute 'stroke-width', 2*nP
-
+          line.setAttribute 'stroke',            colors[i]
+          line.setAttribute 'stroke-width',      2*nP
         it.$circle.attr
           'r': 11*p
           'stroke-width': 7*nP
@@ -109,8 +114,27 @@ class Main
         @$modalHolder.css  display: 'none'
       .delay(delay)
 
-  launchEffects:->
-    @loop(); @linesT.start(); @shiftT.start(); @shakeT.start()
+    @showModalT = new TWEEN.Tween(p:0).to(p:1, 800)
+      .easing TWEEN.Easing.Exponential.Out
+      .onStart =>
+        @shiftT.stop(); @shakeT.stop(); @linesT.stop()
+        @$modal.css display: 'block', opacity: 0
+        @$breakParts.css   display: 'block'
+        @$modalHolder.css  display: 'block'
+        @$modalOverlay.css display: 'block', opacity: 0
+        @$breakPart1.css transform: 'none'
+        @$breakPart2.css transform: 'none'
+        @$breakPart3.css transform: 'none'
+        @$breakPart4.css transform: 'none'
+        @$modal.css display: 'block'
+        @$breakParts.css 'z-index': 0, opacity: 0
+
+      .onUpdate ->
+        p = @p; nP = 1-p
+        it.$modal.css         opacity: p, transform: "translateY(#{15*nP}px)"
+        it.$modalOverlay.css  opacity: p
+
+  launchEffects:-> @loop(); @linesT.start(); @shiftT.start(); @shakeT.start()
 
   loop:->
     requestAnimationFrame(@loop)
