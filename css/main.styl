@@ -12,12 +12,61 @@ use('assets/nesting-tree-traversal.js')
 
 c-black = #222
 c-grey  = #CECECE
-
 BR = 6*PX
 
 body
   font-family OpenSans, -moz-use-system-font
   background transparent url('i/pattern.svg') repeat left top
+  
+.launch-button
+  font-size 16px
+  color white
+  background-color #4ACAD9
+  box-shadow 0 0 0 32*PX white
+  border-radius 30*PX
+  text-align center
+  width = 200*PX
+  width width
+  height = 54*PX
+  height      height
+  line-height height
+  font-size 1.8*gs 
+  font-weight 600
+  letter-spacing 2*PX
+  position absolute
+  overflow hidden
+  display block
+  
+  left 50%
+  top 50%
+  margin-left -(width/2) 
+  margin-top  -(height/2) 
+  
+  &:hover
+    opacity .9
+    cursor pointer
+    {root()}__glare
+      right -35%
+      transition all .4s linear
+  &:active
+    opacity 1
+  &__glare
+    position absolute
+    width 45px
+    height 200%
+    transform rotate(25deg)
+    background-color rgba(255,255,255,.5)
+    top -50%
+    right 120%
+    &:after
+      content ''
+      display none
+      position absolute
+      width 20px
+      height 100%
+      background inherit
+      right -15px
+      top 0
 
 button, .button
   border 0

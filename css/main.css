@@ -1390,6 +1390,60 @@ body {
   font-family: OpenSans, -moz-use-system-font;
   background: transparent url("i/pattern.svg") repeat left top;
 }
+.launch-button {
+  font-size: 16px;
+  color: #fff;
+  background-color: #4acad9;
+  box-shadow: 0 0 0 2rem #fff;
+  border-radius: 1.875rem;
+  text-align: center;
+  width: 12.5rem;
+  height: 3.375rem;
+  line-height: 3.375rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.125rem;
+  position: absolute;
+  overflow: hidden;
+  display: block;
+  left: 50%;
+  top: 50%;
+  margin-left: -6.25rem;
+  margin-top: -1.6875rem;
+}
+.launch-button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+.launch-button:hover .launch-button__glare {
+  right: -35%;
+  -webkit-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+}
+.launch-button:active {
+  opacity: 1;
+}
+.launch-button__glare {
+  position: absolute;
+  width: 45px;
+  height: 200%;
+  -webkit-transform: rotate(25deg);
+  -ms-transform: rotate(25deg);
+  transform: rotate(25deg);
+  background-color: rgba(255,255,255,0.5);
+  top: -50%;
+  right: 120%;
+}
+.launch-button__glare:after {
+  content: '';
+  display: none;
+  position: absolute;
+  width: 20px;
+  height: 100%;
+  background: inherit;
+  right: -15px;
+  top: 0;
+}
 button,
 .button {
   border: 0;

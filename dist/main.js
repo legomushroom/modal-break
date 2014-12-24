@@ -12,9 +12,11 @@ Main = (function() {
     this.$effect = $('#js-effect');
     this.$close = $('#js-close-button');
     this.$modal = $('#js-modal');
+    this.$modalHolder = $('#js-modal-holder');
     this.$protoImage = $('.js-proto-image');
     this.$breakParts = $('#js-break-parts');
     this.$modalOverlay = $('#js-modal-overlay');
+    this.$showModal = $('#js-show-modal');
     this.$circle = $('#js-circle');
     this.$breakParts = $('#js-break-parts');
     this.$breakOverlays = this.$breakParts.find('.svg-overlay');
@@ -161,7 +163,13 @@ Main = (function() {
       });
     }).onComplete((function(_this) {
       return function() {
-        return _this.$modalOverlay.css({
+        _this.$modalOverlay.css({
+          display: 'none'
+        });
+        _this.$breakParts.css({
+          display: 'none'
+        });
+        return _this.$modalHolder.css({
           display: 'none'
         });
       };

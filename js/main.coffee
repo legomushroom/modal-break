@@ -7,9 +7,12 @@ class Main
     @$effect  = $('#js-effect')
     @$close   = $ '#js-close-button'
     @$modal   = $ '#js-modal'
+    @$modalHolder   = $ '#js-modal-holder'
     @$protoImage    = $ '.js-proto-image'
     @$breakParts    = $('#js-break-parts')
     @$modalOverlay  = $('#js-modal-overlay')
+
+    @$showModal = $('#js-show-modal')
 
     @$circle = $('#js-circle')
 
@@ -72,7 +75,7 @@ class Main
           'stroke-width': 7*nP
           'fill': "rgba(#{~~(0+255*p)},#{~~(255-153*p)},#{~~(255-75*p)}, #{nP})"
 
-      .onComplete => @$effect.css       display: 'none'
+      .onComplete => @$effect.css  display: 'none'
       .delay(delay)
 
     shakeOffset = 20
@@ -100,7 +103,10 @@ class Main
         it.$modalOverlay.css
           transform:  "translate(0, #{50*p})"
           opacity:    nP
-      .onComplete => @$modalOverlay.css display: 'none'
+      .onComplete =>
+        @$modalOverlay.css display: 'none'
+        @$breakParts.css   display: 'none'
+        @$modalHolder.css  display: 'none'
       .delay(delay)
 
   launchEffects:->
