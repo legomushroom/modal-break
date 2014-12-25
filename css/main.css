@@ -1398,9 +1398,9 @@ body {
   border-radius: 1.875rem;
   text-align: center;
   width: 12.5rem;
-  height: 3.375rem;
-  line-height: 3.375rem;
-  font-size: 1.125rem;
+  height: 3.125rem;
+  line-height: 3.125rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.125rem;
   position: absolute;
@@ -1409,7 +1409,7 @@ body {
   left: 50%;
   top: 50%;
   margin-left: -6.25rem;
-  margin-top: -1.6875rem;
+  margin-top: -1.5625rem;
 }
 .launch-button:hover {
   opacity: 0.9;

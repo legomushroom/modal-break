@@ -26,10 +26,11 @@ Main = (function() {
     this.$breakPart4 = this.$breakOverlays.eq(3);
     this.$lines = $('.js-line').children();
     this.loop = this.loop.bind(this);
-    return this.linesEffect();
+    return this.initEffectTweens();
   };
 
   Main.prototype.showModal = function() {
+    this.initEffectTweens();
     return this.showModalT.start();
   };
 
@@ -88,7 +89,7 @@ Main = (function() {
     })(this));
   };
 
-  Main.prototype.linesEffect = function(delay) {
+  Main.prototype.initEffectTweens = function(delay) {
     var colors, it, len, shakeOffset;
     if (delay == null) {
       delay = 0;
@@ -189,9 +190,9 @@ Main = (function() {
       p: 1
     }, 800).easing(TWEEN.Easing.Exponential.Out).onStart((function(_this) {
       return function() {
-        _this.shiftT.stop();
-        _this.shakeT.stop();
-        _this.linesT.stop();
+        TWEEN.remove(_this.shiftT);
+        TWEEN.remove(_this.shakeT);
+        TWEEN.remove(_this.linesT);
         _this.$modal.css({
           display: 'block',
           opacity: 0

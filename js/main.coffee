@@ -25,10 +25,9 @@ class Main
 
     @$lines =  $('.js-line').children()
     @loop = @loop.bind @
-    @linesEffect()
+    @initEffectTweens()
 
-  showModal:->
-    @showModalT.start()
+  showModal:-> @initEffectTweens(); @showModalT.start()
 
   listeners:->
     @$showModal.on 'click', => @showModal()
@@ -64,12 +63,11 @@ class Main
       @launchEffects()
       true
 
-  linesEffect:(delay=0)->
+  initEffectTweens:(delay=0)->
     it = @
     len = 900; colors = ['yellow', 'hotpink', 'cyan']
     @linesT = new TWEEN.Tween(p:0).to(p:1, 450)
       .onUpdate ->
-        # console.log it.linesT.progress()
         p = @p; nP= 1-p; progress = (2*len)*nP + len
         for line, i in it.$lines
           line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP
@@ -117,7 +115,7 @@ class Main
     @showModalT = new TWEEN.Tween(p:0).to(p:1, 800)
       .easing TWEEN.Easing.Exponential.Out
       .onStart =>
-        @shiftT.stop(); @shakeT.stop(); @linesT.stop()
+        TWEEN.remove(@shiftT); TWEEN.remove(@shakeT); TWEEN.remove(@linesT)
         @$modal.css display: 'block', opacity: 0
         @$breakParts.css   display: 'block'
         @$modalHolder.css  display: 'block'
