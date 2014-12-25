@@ -25,7 +25,9 @@ class Main
 
     @$lines =  $('.js-line').children()
     @loop = @loop.bind @
+    @loop()
     @initEffectTweens()
+    @showModal()
 
   showModal:-> @initEffectTweens(); @showModalT.start()
 
@@ -116,6 +118,7 @@ class Main
       .easing TWEEN.Easing.Exponential.Out
       .onStart =>
         TWEEN.remove(@shiftT); TWEEN.remove(@shakeT); TWEEN.remove(@linesT)
+        console.log 'a'
         @$modal.css display: 'block', opacity: 0
         @$breakParts.css   display: 'block'
         @$modalHolder.css  display: 'block'
@@ -132,7 +135,7 @@ class Main
         it.$modal.css         opacity: p, transform: "translateY(#{15*nP}px)"
         it.$modalOverlay.css  opacity: p
 
-  launchEffects:-> @loop(); @linesT.start(); @shiftT.start(); @shakeT.start()
+  launchEffects:-> @linesT.start(); @shiftT.start(); @shakeT.start()
 
   loop:->
     requestAnimationFrame(@loop)

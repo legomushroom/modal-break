@@ -1552,6 +1552,7 @@ button--grey,
   text-align: center;
   letter-spacing: 0.0625rem;
   overflow: hidden;
+  display: none;
 }
 .modal__close {
   position: absolute;
@@ -1670,6 +1671,7 @@ button--grey,
   top: 0;
   left: 0;
   background: rgba(34,34,34,0.75);
+  display: none;
 }
 .svg-overlay {
   -webkit-backface-visibility: hidden;

@@ -26,7 +26,9 @@ Main = (function() {
     this.$breakPart4 = this.$breakOverlays.eq(3);
     this.$lines = $('.js-line').children();
     this.loop = this.loop.bind(this);
-    return this.initEffectTweens();
+    this.loop();
+    this.initEffectTweens();
+    return this.showModal();
   };
 
   Main.prototype.showModal = function() {
@@ -193,6 +195,7 @@ Main = (function() {
         TWEEN.remove(_this.shiftT);
         TWEEN.remove(_this.shakeT);
         TWEEN.remove(_this.linesT);
+        console.log('a');
         _this.$modal.css({
           display: 'block',
           opacity: 0
@@ -242,7 +245,6 @@ Main = (function() {
   };
 
   Main.prototype.launchEffects = function() {
-    this.loop();
     this.linesT.start();
     this.shiftT.start();
     return this.shakeT.start();
