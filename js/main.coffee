@@ -83,7 +83,7 @@ class Main
       .onComplete => @$effect.css  display: 'none'
       .delay(delay)
 
-    shakeOffset = 20
+    shakeOffset = 80
     @shakeT = new TWEEN.Tween(p:0).to(p:1, 350)
       .onUpdate ->
         p = @p; nP = 1-p

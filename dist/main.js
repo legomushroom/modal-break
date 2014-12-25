@@ -127,7 +127,7 @@ Main = (function() {
         });
       };
     })(this)).delay(delay);
-    shakeOffset = 20;
+    shakeOffset = 80;
     this.shakeT = new TWEEN.Tween({
       p: 0
     }).to({
