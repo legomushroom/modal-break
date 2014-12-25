@@ -195,7 +195,6 @@ Main = (function() {
         TWEEN.remove(_this.shiftT);
         TWEEN.remove(_this.shakeT);
         TWEEN.remove(_this.linesT);
-        console.log('a');
         _this.$modal.css({
           display: 'block',
           opacity: 0

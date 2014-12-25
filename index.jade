@@ -14,16 +14,20 @@ html
   body
     include css/icons.svg
 
+    .look Look Ma! I broke that HTML!
+
     a.by(href="http://twitter.com/legomushroom")
 
     #js-show-modal.launch-button show modal
       .launch-button__glare
 
-
     //- iframe(src="http://www.deepeastmusic.com/", style="width:100%;height:900px")
     .modal-overlay#js-modal-overlay
 
     .modal-holder#js-modal-holder
+      .hint.hint--1 play with the form to be sure it is just a plain HTML
+      .hint.hint--2 then hit the close icon
+
       .effect#js-effect(style="outline1: 1px solid red")
         .effect__circle
           svg(viewBox="0 0 100 100", width="100", height="100")

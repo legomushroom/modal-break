@@ -118,7 +118,6 @@ class Main
       .easing TWEEN.Easing.Exponential.Out
       .onStart =>
         TWEEN.remove(@shiftT); TWEEN.remove(@shakeT); TWEEN.remove(@linesT)
-        console.log 'a'
         @$modal.css display: 'block', opacity: 0
         @$breakParts.css   display: 'block'
         @$modalHolder.css  display: 'block'
