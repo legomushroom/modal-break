@@ -1447,7 +1447,7 @@ html {
   width: 13.75rem;
   height: 2.8125rem;
   line-height: 2.8125rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.125rem;
   position: absolute;
@@ -1719,7 +1719,6 @@ button--grey,
   top: 0;
   left: 0;
   background: rgba(34,34,34,0.9);
-  display: none;
   z-index: 1;
 }
 .svg-overlay {

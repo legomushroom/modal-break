@@ -29,7 +29,7 @@ class Main
     @loop = @loop.bind @
     @loop()
     @initEffectTweens()
-    @showModal()
+    @showModal(true)
     @showHints(700)
 
   showHints:(delay)->
@@ -56,7 +56,7 @@ class Main
       .start()
 
 
-  showModal:-> @initEffectTweens(); @showModalT.start()
+  showModal:(isFirst)-> @initEffectTweens(isFirst); @showModalT.start()
 
   listeners:->
     @$showModal.on 'click', => @showModal()
@@ -92,7 +92,7 @@ class Main
       @launchEffects()
       true
 
-  initEffectTweens:(delay=0)->
+  initEffectTweens:(isFirst)->
     it = @
     len = 900; colors = ['yellow', 'hotpink', 'cyan']
     @linesT = new TWEEN.Tween(p:0).to(p:1, 450)
@@ -108,7 +108,6 @@ class Main
           'fill': "rgba(#{~~(0+255*p)},#{~~(255-153*p)},#{~~(255-75*p)}, #{nP})"
 
       .onComplete => @$effect.css  display: 'none'
-      .delay(delay)
 
     shakeOffset = 80
     @shakeT = new TWEEN.Tween(p:0).to(p:1, 350)
@@ -118,7 +117,6 @@ class Main
         it.$breakParts.css transform: "translate(#{shake}px, #{shake}px)"
         it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
       .easing TWEEN.Easing.Elastic.Out
-      .delay(delay)
 
     @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200)
       .onUpdate ->
@@ -139,7 +137,6 @@ class Main
         @$modalOverlay.css display: 'none'
         @$breakParts.css   display: 'none'
         @$modalHolder.css  display: 'none'
-      .delay(delay)
 
     @showModalT = new TWEEN.Tween(p:0).to(p:1, 800)
       .easing TWEEN.Easing.Exponential.Out
@@ -148,7 +145,7 @@ class Main
         @$modal.css display: 'block', opacity: 0
         @$breakParts.css   display: 'block'
         @$modalHolder.css  display: 'block'
-        @$modalOverlay.css display: 'block', opacity: 0
+        !isFirst and @$modalOverlay.css display: 'block', opacity: 0
         @$breakPart1.css transform: 'none'
         @$breakPart2.css transform: 'none'
         @$breakPart3.css transform: 'none'
@@ -159,9 +156,11 @@ class Main
       .onUpdate ->
         p = @p; nP = 1-p
         it.$modal.css         opacity: p, transform: "translateY(#{15*nP}px)"
-        it.$modalOverlay.css  opacity: p
+        !isFirst and it.$modalOverlay.css  opacity: p
 
-  launchEffects:-> @linesT.start(); @shiftT.start(); @shakeT.start()
+  launchEffects:->
+    @$hint1.hide(); @$hint2.hide()
+    @linesT.start(); @shiftT.start(); @shakeT.start()
 
   loop:->
     requestAnimationFrame(@loop)

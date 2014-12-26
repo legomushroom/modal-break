@@ -30,7 +30,7 @@ Main = (function() {
     this.loop = this.loop.bind(this);
     this.loop();
     this.initEffectTweens();
-    this.showModal();
+    this.showModal(true);
     return this.showHints(700);
   };
 
@@ -71,8 +71,8 @@ Main = (function() {
     }).delay(delay + HINT2_DELAY + HIDE_DELAY).start();
   };
 
-  Main.prototype.showModal = function() {
-    this.initEffectTweens();
+  Main.prototype.showModal = function(isFirst) {
+    this.initEffectTweens(isFirst);
     return this.showModalT.start();
   };
 
@@ -131,11 +131,8 @@ Main = (function() {
     })(this));
   };
 
-  Main.prototype.initEffectTweens = function(delay) {
+  Main.prototype.initEffectTweens = function(isFirst) {
     var colors, it, len, shakeOffset;
-    if (delay == null) {
-      delay = 0;
-    }
     it = this;
     len = 900;
     colors = ['yellow', 'hotpink', 'cyan'];
@@ -166,7 +163,7 @@ Main = (function() {
           display: 'none'
         });
       };
-    })(this)).delay(delay);
+    })(this));
     shakeOffset = 80;
     this.shakeT = new TWEEN.Tween({
       p: 0
@@ -183,7 +180,7 @@ Main = (function() {
       return it.$effect.css({
         transform: "translate(" + (-.75 * shake) + "px, " + (-.5 * shake) + "px)"
       });
-    }).easing(TWEEN.Easing.Elastic.Out).delay(delay);
+    }).easing(TWEEN.Easing.Elastic.Out);
     this.shiftT = new TWEEN.Tween({
       p: 0
     }).to({
@@ -225,7 +222,7 @@ Main = (function() {
           display: 'none'
         });
       };
-    })(this)).delay(delay);
+    })(this));
     return this.showModalT = new TWEEN.Tween({
       p: 0
     }).to({
@@ -245,7 +242,7 @@ Main = (function() {
         _this.$modalHolder.css({
           display: 'block'
         });
-        _this.$modalOverlay.css({
+        !isFirst && _this.$modalOverlay.css({
           display: 'block',
           opacity: 0
         });
@@ -277,13 +274,15 @@ Main = (function() {
         opacity: p,
         transform: "translateY(" + (15 * nP) + "px)"
       });
-      return it.$modalOverlay.css({
+      return !isFirst && it.$modalOverlay.css({
         opacity: p
       });
     });
   };
 
   Main.prototype.launchEffects = function() {
+    this.$hint1.hide();
+    this.$hint2.hide();
     this.linesT.start();
     this.shiftT.start();
     return this.shakeT.start();
