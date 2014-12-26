@@ -11,6 +11,8 @@ class Main
     @$protoImage    = $ '.js-proto-image'
     @$breakParts    = $('#js-break-parts')
     @$modalOverlay  = $('#js-modal-overlay')
+    @$hint1         = $('#js-hint1')
+    @$hint2         = $('#js-hint2')
 
     @$showModal = $('#js-show-modal')
 
@@ -28,6 +30,31 @@ class Main
     @loop()
     @initEffectTweens()
     @showModal()
+    @showHints(700)
+
+  showHints:(delay)->
+    it = @
+    HIDE_DELAY  = 5000
+    HINT2_DELAY = 200
+    @hint1T = new TWEEN.Tween(p:0).to(p:1, 500)
+      .onUpdate ->
+        it.$hint1.css opacity: @p
+      .delay(delay)
+      .start()
+
+    @hint2T = new TWEEN.Tween(p:0).to(p:1, 500)
+      .onUpdate ->
+        it.$hint2.css opacity: @p
+      .delay(delay+HINT2_DELAY)
+      .start()
+
+    @hintHideT = new TWEEN.Tween(p:0).to(p:1, 500)
+      .onUpdate ->
+        it.$hint1.css opacity: 1-@p
+        it.$hint2.css opacity: 1-@p
+      .delay(delay+HINT2_DELAY+HIDE_DELAY)
+      .start()
+
 
   showModal:-> @initEffectTweens(); @showModalT.start()
 

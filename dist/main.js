@@ -16,6 +16,8 @@ Main = (function() {
     this.$protoImage = $('.js-proto-image');
     this.$breakParts = $('#js-break-parts');
     this.$modalOverlay = $('#js-modal-overlay');
+    this.$hint1 = $('#js-hint1');
+    this.$hint2 = $('#js-hint2');
     this.$showModal = $('#js-show-modal');
     this.$circle = $('#js-circle');
     this.$breakParts = $('#js-break-parts');
@@ -28,7 +30,45 @@ Main = (function() {
     this.loop = this.loop.bind(this);
     this.loop();
     this.initEffectTweens();
-    return this.showModal();
+    this.showModal();
+    return this.showHints(700);
+  };
+
+  Main.prototype.showHints = function(delay) {
+    var HIDE_DELAY, HINT2_DELAY, it;
+    it = this;
+    HIDE_DELAY = 5000;
+    HINT2_DELAY = 200;
+    this.hint1T = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 500).onUpdate(function() {
+      return it.$hint1.css({
+        opacity: this.p
+      });
+    }).delay(delay).start();
+    this.hint2T = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 500).onUpdate(function() {
+      return it.$hint2.css({
+        opacity: this.p
+      });
+    }).delay(delay + HINT2_DELAY).start();
+    return this.hintHideT = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 500).onUpdate(function() {
+      it.$hint1.css({
+        opacity: 1 - this.p
+      });
+      return it.$hint2.css({
+        opacity: 1 - this.p
+      });
+    }).delay(delay + HINT2_DELAY + HIDE_DELAY).start();
   };
 
   Main.prototype.showModal = function() {
