@@ -13,6 +13,8 @@ class Main
     @$modalOverlay  = $('#js-modal-overlay')
     @$hint1         = $('#js-hint1')
     @$hint2         = $('#js-hint2')
+    @$burst         = $('#js-burst')
+    @$burstPaths    = @$burst.find('path')
 
     @$showModal = $('#js-show-modal')
 
@@ -94,8 +96,22 @@ class Main
 
   initEffectTweens:(isFirst)->
     it = @
-    len = 900; colors = ['yellow', 'hotpink', 'cyan']
-    @linesT = new TWEEN.Tween(p:0).to(p:1, 450)
+    len = 900; colors = ['hotpink', 'yellow', 'cyan']
+    @s = 1
+
+    for path, i in it.$burstPaths
+      len = path.getTotalLength()
+      showLen    = @rand(0, ~~len/2)
+      showOffset = @rand(0, -~~len)
+      path.len = len; path.showLen = showLen
+      path.showOffset = showOffset
+      path.strokeWidth = @rand(0, 5)
+      path.setAttribute 'stroke-dasharray',   "#{showLen} #{3*len}"
+      path.setAttribute 'stroke-dashoffset',  showLen
+      path.setAttribute 'stroke-linecap',     'round'
+
+    @linesT = new TWEEN.Tween(p:0).to(p:1, 450*@s)
+      .easing TWEEN.Easing.Linear.None
       .onUpdate ->
         p = @p; nP= 1-p; progress = (2*len)*nP + len
         for line, i in it.$lines
@@ -109,8 +125,16 @@ class Main
 
       .onComplete => @$effect.css  display: 'none'
 
-    shakeOffset = 80
-    @shakeT = new TWEEN.Tween(p:0).to(p:1, 350)
+    @burstT = new TWEEN.Tween(p:0).to(p:1, 300*@s)
+      .onUpdate ->
+        p = @p; nP = 1-p
+        for path, i in it.$burstPaths
+          path.setAttribute 'stroke-dashoffset', path.showOffset-(path.len*p)
+          path.setAttribute 'stroke-width',  path.strokeWidth*nP
+
+
+    shakeOffset = 50
+    @shakeT = new TWEEN.Tween(p:0).to(p:1, 350*@s)
       .onUpdate ->
         p = @p; nP = 1-p
         shake = shakeOffset*nP
@@ -118,7 +142,7 @@ class Main
         it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
       .easing TWEEN.Easing.Elastic.Out
 
-    @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200)
+    @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200*@s)
       .onUpdate ->
         p = @p; nP = 1-p
         shift = 900*p
@@ -138,7 +162,7 @@ class Main
         @$breakParts.css   display: 'none'
         @$modalHolder.css  display: 'none'
 
-    @showModalT = new TWEEN.Tween(p:0).to(p:1, 800)
+    @showModalT = new TWEEN.Tween(p:0).to(p:1, 800*@s)
       .easing TWEEN.Easing.Exponential.Out
       .onStart =>
         TWEEN.remove(@shiftT); TWEEN.remove(@shakeT); TWEEN.remove(@linesT)
@@ -160,11 +184,14 @@ class Main
 
   launchEffects:->
     @$hint1.hide(); @$hint2.hide()
+    @burstT.start()
     @linesT.start(); @shiftT.start(); @shakeT.start()
 
   loop:->
     requestAnimationFrame(@loop)
     TWEEN.update()
+
+  rand:(min,max)-> Math.floor((Math.random() * ((max + 1) - min)) + min)
 
 new Main
 

@@ -18,6 +18,8 @@ Main = (function() {
     this.$modalOverlay = $('#js-modal-overlay');
     this.$hint1 = $('#js-hint1');
     this.$hint2 = $('#js-hint2');
+    this.$burst = $('#js-burst');
+    this.$burstPaths = this.$burst.find('path');
     this.$showModal = $('#js-show-modal');
     this.$circle = $('#js-circle');
     this.$breakParts = $('#js-break-parts');
@@ -132,22 +134,37 @@ Main = (function() {
   };
 
   Main.prototype.initEffectTweens = function(isFirst) {
-    var colors, it, len, shakeOffset;
+    var colors, i, it, len, path, shakeOffset, showLen, showOffset, _i, _len, _ref;
     it = this;
     len = 900;
-    colors = ['yellow', 'hotpink', 'cyan'];
+    colors = ['hotpink', 'yellow', 'cyan'];
+    this.s = 1;
+    _ref = it.$burstPaths;
+    for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
+      path = _ref[i];
+      len = path.getTotalLength();
+      showLen = this.rand(0, ~~len / 2);
+      showOffset = this.rand(0, -(~~len));
+      path.len = len;
+      path.showLen = showLen;
+      path.showOffset = showOffset;
+      path.strokeWidth = this.rand(0, 5);
+      path.setAttribute('stroke-dasharray', "" + showLen + " " + (3 * len));
+      path.setAttribute('stroke-dashoffset', showLen);
+      path.setAttribute('stroke-linecap', 'round');
+    }
     this.linesT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
-    }, 450).onUpdate(function() {
-      var i, line, nP, p, progress, _i, _len, _ref;
+    }, 450 * this.s).easing(TWEEN.Easing.Linear.None).onUpdate(function() {
+      var line, nP, p, progress, _j, _len1, _ref1;
       p = this.p;
       nP = 1 - p;
       progress = (2 * len) * nP + len;
-      _ref = it.$lines;
-      for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-        line = _ref[i];
+      _ref1 = it.$lines;
+      for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
+        line = _ref1[i];
         line.setAttribute('stroke-dashoffset', progress + (i * 100) * nP);
         line.setAttribute('stroke', colors[i]);
         line.setAttribute('stroke-width', 2 * nP);
@@ -164,12 +181,29 @@ Main = (function() {
         });
       };
     })(this));
-    shakeOffset = 80;
+    this.burstT = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 300 * this.s).onUpdate(function() {
+      var nP, p, _j, _len1, _ref1, _results;
+      p = this.p;
+      nP = 1 - p;
+      _ref1 = it.$burstPaths;
+      _results = [];
+      for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
+        path = _ref1[i];
+        path.setAttribute('stroke-dashoffset', path.showOffset - (path.len * p));
+        _results.push(path.setAttribute('stroke-width', path.strokeWidth * nP));
+      }
+      return _results;
+    });
+    shakeOffset = 50;
     this.shakeT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
-    }, 350).onUpdate(function() {
+    }, 350 * this.s).onUpdate(function() {
       var nP, p, shake;
       p = this.p;
       nP = 1 - p;
@@ -185,7 +219,7 @@ Main = (function() {
       p: 0
     }).to({
       p: 1
-    }, 1200).onUpdate(function() {
+    }, 1200 * this.s).onUpdate(function() {
       var nP, p, shift, t1, t2, t3, t4;
       p = this.p;
       nP = 1 - p;
@@ -227,7 +261,7 @@ Main = (function() {
       p: 0
     }).to({
       p: 1
-    }, 800).easing(TWEEN.Easing.Exponential.Out).onStart((function(_this) {
+    }, 800 * this.s).easing(TWEEN.Easing.Exponential.Out).onStart((function(_this) {
       return function() {
         TWEEN.remove(_this.shiftT);
         TWEEN.remove(_this.shakeT);
@@ -283,6 +317,7 @@ Main = (function() {
   Main.prototype.launchEffects = function() {
     this.$hint1.hide();
     this.$hint2.hide();
+    this.burstT.start();
     this.linesT.start();
     this.shiftT.start();
     return this.shakeT.start();
@@ -291,6 +326,10 @@ Main = (function() {
   Main.prototype.loop = function() {
     requestAnimationFrame(this.loop);
     return TWEEN.update();
+  };
+
+  Main.prototype.rand = function(min, max) {
+    return Math.floor((Math.random() * ((max + 1) - min)) + min);
   };
 
   return Main;

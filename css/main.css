@@ -1548,6 +1548,14 @@ button--grey,
   z-index: 4;
   display: none;
 }
+.effect__burst {
+  position: absolute;
+  width: 3.625rem;
+  height: 3.625rem;
+  left: 20.125rem;
+  top: 1.4375rem;
+  opacity: 0.5;
+}
 .effect__circle {
   position: absolute;
   left: 25rem;
