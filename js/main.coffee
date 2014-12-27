@@ -15,17 +15,18 @@ class Main
     @$hint2         = $('#js-hint2')
     @$burst         = $('#js-burst')
     @$burstPaths    = @$burst.find('path')
-
-    @$showModal = $('#js-show-modal')
-
-    @$circle = $('#js-circle')
-
+    @$showModal     = $('#js-show-modal')
+    @$circle        = $('#js-circle')
     @$breakParts    = $('#js-break-parts')
     @$breakOverlays = @$breakParts.find('.svg-overlay')
     @$breakPart1 = @$breakOverlays.eq(0)
     @$breakPart2 = @$breakOverlays.eq(1)
     @$breakPart3 = @$breakOverlays.eq(2)
     @$breakPart4 = @$breakOverlays.eq(3)
+    @$svgOverlay = $('.svg-overlay')
+
+
+    console.log  @$modal[0].querySelectorAll 'input'
 
     @$lines =  $('.js-line').children()
     @loop = @loop.bind @
@@ -33,9 +34,9 @@ class Main
     @initEffectTweens()
     @showModal(true)
     @showHints(700)
-    @audio = new Howl
-      urls: ['sounds/crack3.mp3']
-      volume: 0.75
+    isOpera = navigator.userAgent.match(/Opera|OPR\//)
+    url = if !isOpera then 'sounds/crack3.mp3' else 'sounds/crack1.wav'
+    @audio = new Howl urls: [url]
 
   showHints:(delay)->
     it = @
@@ -61,7 +62,12 @@ class Main
       .start()
 
 
-  showModal:(isFirst)-> @initEffectTweens(isFirst); @showModalT.start()
+  showModal:(isFirst)->
+    if isFirst
+      tm = setTimeout =>
+        @$modal.find('input').val(''); clearTimeout tm
+      , 10
+    @initEffectTweens(isFirst); @showModalT.start()
 
   listeners:->
     @$showModal.on 'click', => @showModal()
@@ -86,6 +92,7 @@ class Main
       html2canvas @$modal,
         onrendered: (canvas)=>
           dataURL = canvas.toDataURL()
+          @$svgOverlay.css display: 'block'
           @$protoImage.attr 'xlink:href', dataURL
 
     @$close.on 'click', =>
@@ -135,7 +142,6 @@ class Main
         for path, i in it.$burstPaths
           path.setAttribute 'stroke-dashoffset', path.showOffset-(path.len*p)
           path.setAttribute 'stroke-width',  path.strokeWidth*nP
-
 
     shakeOffset = 50
     @shakeT = new TWEEN.Tween(p:0).to(p:1, 350*@s)

@@ -1412,7 +1412,7 @@ a,
 }
 body,
 html {
-  font-family: OpenSans, -moz-use-system-font;
+  font-family: OpenSans, 'Open Sans', sans-serif;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -1667,7 +1667,6 @@ button--grey,
   letter-spacing: 0.0625rem;
   font-size: 0.875rem;
   color: #222;
-  font-family: OpenSans;
 }
 .input-with-label__input:hover {
   background: rgba(34,34,34,0.01);
@@ -1733,6 +1732,7 @@ button--grey,
   -webkit-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
   backface-visibility: hidden;
+  display: none;
 }
 .svg-overlay--2 {
   -webkit-transform-origin: 96% 2%;

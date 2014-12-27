@@ -4,7 +4,7 @@ html
     meta(charset='UTF-8')
     title break modal
     link(rel="stylesheet", type="text/css", href="css/main.css")
-    //- link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700', rel='stylesheet', type='text/css')
 
   mixin input(o)
     .input-with-label
@@ -64,23 +64,6 @@ html
               //- path#Path-59(d='M138.640173,128.478258 L155.432726,253.676091', stroke='#D0011B', stroke-width='2', sketch:type='MSShapeGroup', transform='translate(147.036449, 191.077175) rotate(-10.000000) translate(-147.036449, -191.077175) ')           
               path#Path-60(d='M136.22617,122.003677 L220.034234,215.708411', stroke='#FC3F6B', stroke-width='2', sketch:type='MSShapeGroup', transform='translate(178.130202, 168.856044) rotate(-10.000000) translate(-178.130202, -168.856044) ')
 
-            //- g(id='Path-58-+-Path-59-+-Path-60', transform='translate(30.450836, 39.033951) rotate(9.000000) translate(-30.450836, -39.033951) translate(19.950836, 30.033951)')
-            //-   path#Path-58(d='M5.75371172,0.362789702 L0.727043407,17.557757', stroke='#B8E986', stroke-width='3', sketch:type='MSShapeGroup')
-            //-   path#Path-59(d='M7.71795437,0.362789702 L11.0744517,17.7406336', stroke='#FC46AD', stroke-width='2', sketch:type='MSShapeGroup')
-            //-   path#Path-60(d='M8.70113239,0.362789702 L20.9210688,13.4506889', stroke='#D0D202', stroke-width='2', sketch:type='MSShapeGroup')
-            //- g(id='Path-58-+-Path-59-+-Path-61', transform='translate(27.445806, 13.864323) rotate(-165.000000) translate(-27.445806, -13.864323) translate(15.945806, 3.864323)', stroke-width='2')
-            //-   path#Path-58(d='M6.04427319,1.61113036 L0.379892643,18.9952118', stroke='#B8E986', sketch:type='MSShapeGroup')
-            //-   path#Path-59(d='M7.93452909,1.31745579 L12.7789233,19.7422242', stroke='#FFE217', sketch:type='MSShapeGroup')
-            //-   path#Path-60(d='M10.2487412,0.0502553229 L22.9044132,14.7133851', stroke='#FC46AD', sketch:type='MSShapeGroup')
-            //- g(id='Path-58-+-Path-59-+-Path-62', transform='translate(43.025684, 26.429356) rotate(-74.000000) translate(-43.025684, -26.429356) translate(32.025684, 14.429356)')
-            //-   path#Path-58(d='M5.1285867,1.52682801 L0.485936929,20.9282085', stroke='#B8E986', stroke-width='3', sketch:type='MSShapeGroup')
-            //-   path#Path-59(d='M6.76767053,1.89140399 L9.97281875,23.051276', stroke='#FC46AD', stroke-width='2', sketch:type='MSShapeGroup')
-            //-   path#Path-60(d='M8.76579638,0.932402432 L21.8893516,18.2251881', stroke='#D0D202', stroke-width='2', sketch:type='MSShapeGroup')
-            //- g(id='Path-58-+-Path-59-+-Path-63', transform='translate(14.621197, 26.150553) rotate(-257.000000) translate(-14.621197, -26.150553) translate(4.121197, 15.150553)')
-            //-   path#Path-58(d='M6.70022547,1.06179893 L0.250188796,20.9820584', stroke='#51CAD7', stroke-width='3', sketch:type='MSShapeGroup')
-            //-   path#Path-59(d='M8.36562846,1.06179893 L12.2706463,21.2597703', stroke='#D0011B', stroke-width='2', sketch:type='MSShapeGroup')
-            //-   path#Path-60(d='M9.96184106,0.158731082 L24.3866629,14.9251267', stroke='#FC3F6B', stroke-width='2', sketch:type='MSShapeGroup')
-
         .effect__circle
           svg(viewBox="0 0 100 100", width="100", height="100")
             circle(cx="50", cy="50", fill="none")#js-circle
@@ -104,20 +87,6 @@ html
           svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
             use(xlink:href="#proto-line", width="4", height="#{len}")
 
-
-          //- g#js-line2
-          //-   line(x1="450", x2="0", y1="150", y2="600", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
-          //-   line(x1="450", x2="0", y1="150", y2="600", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
-          //-   line(x1="450", x2="0", y1="150", y2="600", stroke-dasharray="636.396103068", stroke-dashoffset="636.396103068")
-          //- g#js-line3
-          //-   line(x1="450", x2="300", y1="150", y2="0", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          //-   line(x1="450", x2="300", y1="150", y2="0", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          //-   line(x1="450", x2="300", y1="150", y2="0", stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          //- g#js-line4
-          //-   line(x1="450", x2="600", y1="150", y2="300",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          //-   line(x1="450", x2="600", y1="150", y2="300",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          //-   line(x1="450", x2="600", y1="150", y2="300",  stroke-dasharray="212.13203435596427", stroke-dashoffset="212.13203435596427")
-          
       form1(action="").modal#js-modal
         .modal__close#js-close-button
           - var el = { path: 'close-icon', class: '', id: ''} 
@@ -137,7 +106,7 @@ html
       svg(style="display:none")
         image(width="480", height="450", xlink:href="")#proto-image.js-proto-image
       .break-parts#js-break-parts
-        .svg-overlay
+        .svg-overlay#js-svg-overlay
           svg(viewBox="0 0 480 450")#js-svg1
             clipPath#clip1
               path(d="M0,450.575574 L0,0 L424.903452,0 L452.375,28.5599486 L20.5087638,460.426185 L0,450.575574 Z")

@@ -9,6 +9,7 @@ Main = (function() {
   }
 
   Main.prototype.vars = function() {
+    var isOpera, url;
     this.$effect = $('#js-effect');
     this.$close = $('#js-close-button');
     this.$modal = $('#js-modal');
@@ -28,15 +29,18 @@ Main = (function() {
     this.$breakPart2 = this.$breakOverlays.eq(1);
     this.$breakPart3 = this.$breakOverlays.eq(2);
     this.$breakPart4 = this.$breakOverlays.eq(3);
+    this.$svgOverlay = $('.svg-overlay');
+    console.log(this.$modal[0].querySelectorAll('input'));
     this.$lines = $('.js-line').children();
     this.loop = this.loop.bind(this);
     this.loop();
     this.initEffectTweens();
     this.showModal(true);
     this.showHints(700);
+    isOpera = navigator.userAgent.match(/Opera|OPR\//);
+    url = !isOpera ? 'sounds/crack3.mp3' : 'sounds/crack1.wav';
     return this.audio = new Howl({
-      urls: ['sounds/crack3.mp3'],
-      volume: 0.75
+      urls: [url]
     });
   };
 
@@ -78,6 +82,15 @@ Main = (function() {
   };
 
   Main.prototype.showModal = function(isFirst) {
+    var tm;
+    if (isFirst) {
+      tm = setTimeout((function(_this) {
+        return function() {
+          _this.$modal.find('input').val('');
+          return clearTimeout(tm);
+        };
+      })(this), 10);
+    }
     this.initEffectTweens(isFirst);
     return this.showModalT.start();
   };
@@ -116,6 +129,9 @@ Main = (function() {
           onrendered: function(canvas) {
             var dataURL;
             dataURL = canvas.toDataURL();
+            _this.$svgOverlay.css({
+              display: 'block'
+            });
             return _this.$protoImage.attr('xlink:href', dataURL);
           }
         });
