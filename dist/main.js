@@ -33,7 +33,11 @@ Main = (function() {
     this.loop();
     this.initEffectTweens();
     this.showModal(true);
-    return this.showHints(700);
+    this.showHints(700);
+    return this.audio = new Howl({
+      urls: ['sounds/crack3.mp3'],
+      volume: 0.75
+    });
   };
 
   Main.prototype.showHints = function(delay) {
@@ -128,6 +132,7 @@ Main = (function() {
         });
         _this.$effect.show();
         _this.launchEffects();
+        _this.audio.play();
         return true;
       };
     })(this));
@@ -157,7 +162,7 @@ Main = (function() {
       p: 0
     }).to({
       p: 1
-    }, 1200 * this.s).easing(TWEEN.Easing.Exponential.Out).onUpdate(function() {
+    }, 900 * this.s).easing(TWEEN.Easing.Exponential.Out).onUpdate(function() {
       var line, nP, p, progress, _j, _len1, _ref1;
       p = this.p;
       nP = 1 - p;
@@ -165,7 +170,7 @@ Main = (function() {
       _ref1 = it.$lines;
       for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
         line = _ref1[i];
-        line.setAttribute('stroke-dashoffset', progress + (i * 100) * nP);
+        line.setAttribute('stroke-dashoffset', progress + (i * 500) * nP);
         line.setAttribute('stroke', colors[i]);
         line.setAttribute('stroke-width', 2 * nP);
       }
@@ -185,7 +190,7 @@ Main = (function() {
       p: 0
     }).to({
       p: 1
-    }, 300 * this.s).onUpdate(function() {
+    }, 400 * this.s).onUpdate(function() {
       var nP, p, _j, _len1, _ref1, _results;
       p = this.p;
       nP = 1 - p;
@@ -219,12 +224,12 @@ Main = (function() {
       p: 0
     }).to({
       p: 1
-    }, 1200 * this.s).onUpdate(function() {
+    }, 1350 * this.s).easing(TWEEN.Easing.Sinusoidal.In).onUpdate(function() {
       var nP, p, shift, t1, t2, t3, t4;
       p = this.p;
       nP = 1 - p;
       shift = 900 * p;
-      t1 = "translate(" + (-shift) + "px, " + shift + "px) rotate(" + (-50 * p) + "deg)";
+      t1 = "translate(" + (-shift) + "px, " + (1000 * p) + "px) rotate(" + (-50 * p) + "deg)";
       t2 = "translate(" + (-1270 * p) + "px, " + (500 * p) + "px) rotate(" + (905 * p) + "deg)";
       t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
       t4 = "translate(0, " + (1000 * p) + "px) rotate(" + (-15 * p) + "deg)";
@@ -266,6 +271,7 @@ Main = (function() {
         TWEEN.remove(_this.shiftT);
         TWEEN.remove(_this.shakeT);
         TWEEN.remove(_this.linesT);
+        TWEEN.remove(_this.burstT);
         _this.$modal.css({
           display: 'block',
           opacity: 0

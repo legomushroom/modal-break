@@ -33,6 +33,9 @@ class Main
     @initEffectTweens()
     @showModal(true)
     @showHints(700)
+    @audio = new Howl
+      urls: ['sounds/crack3.mp3']
+      volume: 0.75
 
   showHints:(delay)->
     it = @
@@ -92,6 +95,7 @@ class Main
         opacity: 1
       @$effect.show()
       @launchEffects()
+      @audio.play()
       true
 
   initEffectTweens:(isFirst)->
@@ -110,12 +114,12 @@ class Main
       path.setAttribute 'stroke-linecap',     'round'
 
     len = 900; colors = ['hotpink', 'yellow', 'cyan']
-    @linesT = new TWEEN.Tween(p:0).to(p:1, 1200*@s)
+    @linesT = new TWEEN.Tween(p:0).to(p:1, 900*@s)
       .easing TWEEN.Easing.Exponential.Out
       .onUpdate ->
         p = @p; nP= 1-p; progress = (len)*nP - len*p
         for line, i in it.$lines
-          line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP
+          line.setAttribute 'stroke-dashoffset', progress+(i*500)*nP
           line.setAttribute 'stroke',            colors[i]
           line.setAttribute 'stroke-width',      2*nP
         it.$circle.attr
@@ -125,7 +129,7 @@ class Main
 
       .onComplete => @$effect.css  display: 'none'
 
-    @burstT = new TWEEN.Tween(p:0).to(p:1, 300*@s)
+    @burstT = new TWEEN.Tween(p:0).to(p:1, 400*@s)
       .onUpdate ->
         p = @p; nP = 1-p
         for path, i in it.$burstPaths
@@ -142,11 +146,13 @@ class Main
         it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
       .easing TWEEN.Easing.Elastic.Out
 
-    @shiftT = new TWEEN.Tween(p:0).to(p:1, 1200*@s)
+    @shiftT = new TWEEN.Tween(p:0).to(p:1, 1350*@s)
+      # .easing TWEEN.Easing.Quadratic.In
+      .easing TWEEN.Easing.Sinusoidal.In
       .onUpdate ->
         p = @p; nP = 1-p
         shift = 900*p
-        t1 = "translate(#{-shift}px, #{shift}px) rotate(#{-50*p}deg)"
+        t1 = "translate(#{-shift}px, #{1000*p}px) rotate(#{-50*p}deg)"
         t2 = "translate(#{-1270*p}px, #{500*p}px) rotate(#{905*p}deg)"
         t3 = "translate(#{1100*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
         t4 = "translate(0, #{1000*p}px) rotate(#{-15*p}deg)"
@@ -166,6 +172,7 @@ class Main
       .easing TWEEN.Easing.Exponential.Out
       .onStart =>
         TWEEN.remove(@shiftT); TWEEN.remove(@shakeT); TWEEN.remove(@linesT)
+        TWEEN.remove(@burstT)
         @$modal.css display: 'block', opacity: 0
         @$breakParts.css   display: 'block'
         @$modalHolder.css  display: 'block'
@@ -176,7 +183,6 @@ class Main
         @$breakPart4.css transform: 'none'
         @$modal.css display: 'block'
         @$breakParts.css 'z-index': 0, opacity: 0
-
       .onUpdate ->
         p = @p; nP = 1-p
         it.$modal.css         opacity: p, transform: "translateY(#{15*nP}px)"
@@ -184,8 +190,7 @@ class Main
 
   launchEffects:->
     @$hint1.hide(); @$hint2.hide()
-    @burstT.start()
-    @linesT.start(); @shiftT.start(); @shakeT.start()
+    @burstT.start(); @linesT.start(); @shiftT.start(); @shakeT.start()
 
   loop:->
     requestAnimationFrame(@loop)
