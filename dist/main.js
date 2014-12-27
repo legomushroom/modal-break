@@ -136,8 +136,6 @@ Main = (function() {
   Main.prototype.initEffectTweens = function(isFirst) {
     var colors, i, it, len, path, shakeOffset, showLen, showOffset, _i, _len, _ref;
     it = this;
-    len = 900;
-    colors = ['hotpink', 'yellow', 'cyan'];
     this.s = 1;
     _ref = it.$burstPaths;
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
@@ -153,15 +151,17 @@ Main = (function() {
       path.setAttribute('stroke-dashoffset', showLen);
       path.setAttribute('stroke-linecap', 'round');
     }
+    len = 900;
+    colors = ['hotpink', 'yellow', 'cyan'];
     this.linesT = new TWEEN.Tween({
       p: 0
     }).to({
       p: 1
-    }, 450 * this.s).easing(TWEEN.Easing.Linear.None).onUpdate(function() {
+    }, 1200 * this.s).easing(TWEEN.Easing.Exponential.Out).onUpdate(function() {
       var line, nP, p, progress, _j, _len1, _ref1;
       p = this.p;
       nP = 1 - p;
-      progress = (2 * len) * nP + len;
+      progress = len * nP - len * p;
       _ref1 = it.$lines;
       for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
         line = _ref1[i];

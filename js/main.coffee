@@ -96,7 +96,6 @@ class Main
 
   initEffectTweens:(isFirst)->
     it = @
-    len = 900; colors = ['hotpink', 'yellow', 'cyan']
     @s = 1
 
     for path, i in it.$burstPaths
@@ -110,10 +109,11 @@ class Main
       path.setAttribute 'stroke-dashoffset',  showLen
       path.setAttribute 'stroke-linecap',     'round'
 
-    @linesT = new TWEEN.Tween(p:0).to(p:1, 450*@s)
-      .easing TWEEN.Easing.Linear.None
+    len = 900; colors = ['hotpink', 'yellow', 'cyan']
+    @linesT = new TWEEN.Tween(p:0).to(p:1, 1200*@s)
+      .easing TWEEN.Easing.Exponential.Out
       .onUpdate ->
-        p = @p; nP= 1-p; progress = (2*len)*nP + len
+        p = @p; nP= 1-p; progress = (len)*nP - len*p
         for line, i in it.$lines
           line.setAttribute 'stroke-dashoffset', progress+(i*100)*nP
           line.setAttribute 'stroke',            colors[i]

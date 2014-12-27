@@ -89,9 +89,9 @@ html
           svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
             defs
               g.js-line#proto-line
-                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len}", stroke-dashoffset="#{len}")
-                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len}", stroke-dashoffset="#{len}")
-                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len}", stroke-dashoffset="#{len}")
+                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len} #{2*len}", stroke-dashoffset="#{len}")
+                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len} #{2*len}", stroke-dashoffset="#{len}")
+                line(x1="2", x2="2", y1="0", y2="#{len}", stroke="red", stroke-dasharray="#{len} #{2*len}", stroke-dashoffset="#{len}")
             use(xlink:href="#proto-line", width="4", height="#{len}")
         .effect__line.effect__line--2
           svg(viewBox="0 0 4 #{len}", width="4", height="#{len}")
