@@ -25,15 +25,9 @@ class Main
     @$breakPart4 = @$breakOverlays.eq(3)
     @$svgOverlay = $('.svg-overlay')
 
-
-    console.log  @$modal[0].querySelectorAll 'input'
-
     @$lines =  $('.js-line').children()
-    @loop = @loop.bind @
-    @loop()
-    @initEffectTweens()
-    @showModal(true)
-    @showHints(700)
+    @loop = @loop.bind(@); @loop()
+    @initEffectTweens(); @showModal(true); @showHints(700)
     isOpera = navigator.userAgent.match(/Opera|OPR\//)
     url = if !isOpera then 'sounds/crack3.mp3' else 'sounds/crack1.wav'
     @audio = new Howl urls: [url]

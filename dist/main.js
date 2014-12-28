@@ -30,7 +30,6 @@ Main = (function() {
     this.$breakPart3 = this.$breakOverlays.eq(2);
     this.$breakPart4 = this.$breakOverlays.eq(3);
     this.$svgOverlay = $('.svg-overlay');
-    console.log(this.$modal[0].querySelectorAll('input'));
     this.$lines = $('.js-line').children();
     this.loop = this.loop.bind(this);
     this.loop();
