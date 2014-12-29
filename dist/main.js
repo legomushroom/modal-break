@@ -240,22 +240,14 @@ Main = (function() {
     }).to({
       p: 1
     }, 1350 * this.s).easing(TWEEN.Easing.Sinusoidal.In).onUpdate(function() {
-      var nP, p, shift, t1, t2, t3, t4;
+      var nP, p, shift, t1, t4;
       p = this.p;
       nP = 1 - p;
       shift = 900 * p;
       t1 = "translate(" + (-shift) + "px, " + (1000 * p) + "px) rotate(" + (-50 * p) + "deg)";
-      t2 = "translate(" + (-1270 * p) + "px, " + (500 * p) + "px) rotate(" + (905 * p) + "deg)";
-      t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
       t4 = "translate(0, " + (1000 * p) + "px) rotate(" + (-15 * p) + "deg)";
       it.$breakPart1.css({
         transform: t1
-      });
-      it.$breakPart2.css({
-        transform: t2
-      });
-      it.$breakPart3.css({
-        transform: t3
       });
       it.$breakPart4.css({
         transform: t4
@@ -277,6 +269,24 @@ Main = (function() {
         });
       };
     })(this));
+    this.shiftT2 = new TWEEN.Tween({
+      p: 0
+    }).to({
+      p: 1
+    }, 1350 * this.s).onUpdate(function() {
+      var nP, p, shift, t2, t3;
+      p = this.p;
+      nP = 1 - p;
+      shift = 900 * p;
+      t2 = "translate(" + (-1670 * p) + "px, " + (-400 * p) + "px) rotate(" + (905 * p) + "deg)";
+      t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
+      it.$breakPart2.css({
+        transform: t2
+      });
+      return it.$breakPart3.css({
+        transform: t3
+      });
+    });
     return this.showModalT = new TWEEN.Tween({
       p: 0
     }).to({
@@ -341,6 +351,7 @@ Main = (function() {
     this.burstT.start();
     this.linesT.start();
     this.shiftT.start();
+    this.shiftT2.start();
     return this.shakeT.start();
   };
 
