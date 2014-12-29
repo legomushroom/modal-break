@@ -1454,7 +1454,6 @@ html {
   margin-top: -1.40625rem;
 }
 .launch-button:hover {
-  opacity: 0.9;
   cursor: pointer;
 }
 .launch-button:hover .launch-button__glare {
@@ -1463,7 +1462,7 @@ html {
   transition: all 0.4s linear;
 }
 .launch-button:active {
-  opacity: 1;
+  opacity: 0.95;
 }
 .launch-button__glare {
   position: absolute;

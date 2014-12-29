@@ -153,12 +153,8 @@ class Main
         p = @p; nP = 1-p
         shift = 900*p
         t1 = "translate(#{-shift}px, #{1000*p}px) rotate(#{-50*p}deg)"
-        # t2 = "translate(#{-1270*p}px, #{500*p}px) rotate(#{905*p}deg)"
-        # t3 = "translate(#{1100*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
         t4 = "translate(0, #{1000*p}px) rotate(#{-15*p}deg)"
         it.$breakPart1.css transform: t1
-        # it.$breakPart2.css transform: t2
-        # it.$breakPart3.css transform: t3
         it.$breakPart4.css transform: t4
         it.$modalOverlay.css
           transform:  "translate(0, #{50*p})"
@@ -169,25 +165,19 @@ class Main
         @$modalHolder.css  display: 'none'
 
     @shiftT2 = new TWEEN.Tween(p:0).to(p:1, 1350*@s)
-      # .easing TWEEN.Easing.Quadratic.In
-      # .easing TWEEN.Easing.Sinusoidal.In
       .onUpdate ->
         p = @p; nP = 1-p
         shift = 900*p
-        # t1 = "translate(#{-shift}px, #{1000*p}px) rotate(#{-50*p}deg)"
         t2 = "translate(#{-1670*p}px, #{-800*p}px) rotate(#{905*p}deg)"
-        t3 = "translate(#{1100*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
-        # t4 = "translate(0, #{1000*p}px) rotate(#{-15*p}deg)"
-        # it.$breakPart1.css transform: t1
+        t3 = "translate(#{1600*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
         it.$breakPart2.css transform: t2
         it.$breakPart3.css transform: t3
-        # it.$breakPart4.css transform: t4
 
     @showModalT = new TWEEN.Tween(p:0).to(p:1, 800*@s)
       .easing TWEEN.Easing.Exponential.Out
       .onStart =>
-        TWEEN.remove(@shiftT); TWEEN.remove(@shakeT); TWEEN.remove(@linesT)
-        TWEEN.remove(@burstT)
+        TWEEN.remove(@shiftT); TWEEN.remove(@shiftT2); TWEEN.remove(@shakeT)
+        TWEEN.remove(@linesT); TWEEN.remove(@burstT)
         @$modal.css display: 'block', opacity: 0
         @$breakParts.css   display: 'block'
         @$modalHolder.css  display: 'block'

@@ -279,7 +279,7 @@ Main = (function() {
       nP = 1 - p;
       shift = 900 * p;
       t2 = "translate(" + (-1670 * p) + "px, " + (-800 * p) + "px) rotate(" + (905 * p) + "deg)";
-      t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
+      t3 = "translate(" + (1600 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
       it.$breakPart2.css({
         transform: t2
       });
@@ -294,6 +294,7 @@ Main = (function() {
     }, 800 * this.s).easing(TWEEN.Easing.Exponential.Out).onStart((function(_this) {
       return function() {
         TWEEN.remove(_this.shiftT);
+        TWEEN.remove(_this.shiftT2);
         TWEEN.remove(_this.shakeT);
         TWEEN.remove(_this.linesT);
         TWEEN.remove(_this.burstT);
