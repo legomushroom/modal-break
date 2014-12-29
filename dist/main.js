@@ -190,9 +190,9 @@ Main = (function() {
         line.setAttribute('stroke-width', 2 * nP);
       }
       return it.$circle.attr({
-        'r': 11 * p,
-        'stroke-width': 7 * nP,
-        'fill': "rgba(" + (~~(0 + 255 * p)) + "," + (~~(255 - 153 * p)) + "," + (~~(255 - 75 * p)) + ", " + nP + ")"
+        r: 11 * p,
+        fill: "rgba(" + (~~(0 + 255 * p)) + "," + (~~(255 - 153 * p)) + "," + (~~(255 - 75 * p)) + ", " + nP + ")",
+        'stroke-width': 7 * nP
       });
     }).onComplete((function(_this) {
       return function() {
@@ -279,7 +279,7 @@ Main = (function() {
       nP = 1 - p;
       shift = 900 * p;
       t2 = "translate(" + (-1670 * p) + "px, " + (-800 * p) + "px) rotate(" + (905 * p) + "deg)";
-      t3 = "translate(" + (1600 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
+      t3 = "translate(" + (1000 * p) + "px, " + (700 * p) + "px) rotate(" + (-1500 * p) + "deg)";
       it.$breakPart2.css({
         transform: t2
       });

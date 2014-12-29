@@ -124,9 +124,9 @@ class Main
           line.setAttribute 'stroke',            colors[i]
           line.setAttribute 'stroke-width',      2*nP
         it.$circle.attr
-          'r': 11*p
+          r: 11*p
+          fill: "rgba(#{~~(0+255*p)},#{~~(255-153*p)},#{~~(255-75*p)}, #{nP})"
           'stroke-width': 7*nP
-          'fill': "rgba(#{~~(0+255*p)},#{~~(255-153*p)},#{~~(255-75*p)}, #{nP})"
 
       .onComplete => @$effect.css  display: 'none'
 
@@ -169,7 +169,7 @@ class Main
         p = @p; nP = 1-p
         shift = 900*p
         t2 = "translate(#{-1670*p}px, #{-800*p}px) rotate(#{905*p}deg)"
-        t3 = "translate(#{1600*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
+        t3 = "translate(#{1000*p}px, #{700*p}px) rotate(#{-1500*p}deg)"
         it.$breakPart2.css transform: t2
         it.$breakPart3.css transform: t3
 
@@ -190,7 +190,7 @@ class Main
         @$breakParts.css 'z-index': 0, opacity: 0
       .onUpdate ->
         p = @p; nP = 1-p
-        it.$modal.css         opacity: p, transform: "translateY(#{15*nP}px)"
+        it.$modal.css opacity: p, transform: "translateY(#{15*nP}px)"
         !isFirst and it.$modalOverlay.css  opacity: p
 
   launchEffects:->
