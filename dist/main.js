@@ -278,7 +278,7 @@ Main = (function() {
       p = this.p;
       nP = 1 - p;
       shift = 900 * p;
-      t2 = "translate(" + (-1670 * p) + "px, " + (-400 * p) + "px) rotate(" + (905 * p) + "deg)";
+      t2 = "translate(" + (-1670 * p) + "px, " + (-800 * p) + "px) rotate(" + (905 * p) + "deg)";
       t3 = "translate(" + (1100 * p) + "px, " + (600 * p) + "px) rotate(" + (-1500 * p) + "deg)";
       it.$breakPart2.css({
         transform: t2

@@ -175,7 +175,7 @@ class Main
         p = @p; nP = 1-p
         shift = 900*p
         # t1 = "translate(#{-shift}px, #{1000*p}px) rotate(#{-50*p}deg)"
-        t2 = "translate(#{-1670*p}px, #{-400*p}px) rotate(#{905*p}deg)"
+        t2 = "translate(#{-1670*p}px, #{-800*p}px) rotate(#{905*p}deg)"
         t3 = "translate(#{1100*p}px, #{600*p}px) rotate(#{-1500*p}deg)"
         # t4 = "translate(0, #{1000*p}px) rotate(#{-15*p}deg)"
         # it.$breakPart1.css transform: t1
