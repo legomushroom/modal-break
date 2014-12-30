@@ -142,8 +142,8 @@ class Main
       .onUpdate ->
         p = @p; nP = 1-p
         shake = shakeOffset*nP
-        it.$breakParts.css transform: "translate(#{shake}px, #{shake}px)"
-        it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
+        # it.$breakParts.css transform: "translate(#{shake}px, #{shake}px)"
+        # it.$effect.css transform: "translate(#{-.75*shake}px, #{-.5*shake}px)"
       .easing TWEEN.Easing.Elastic.Out
 
     @shiftT = new TWEEN.Tween(p:0).to(p:1, 1350*@s)

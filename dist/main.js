@@ -227,13 +227,7 @@ Main = (function() {
       var nP, p, shake;
       p = this.p;
       nP = 1 - p;
-      shake = shakeOffset * nP;
-      it.$breakParts.css({
-        transform: "translate(" + shake + "px, " + shake + "px)"
-      });
-      return it.$effect.css({
-        transform: "translate(" + (-.75 * shake) + "px, " + (-.5 * shake) + "px)"
-      });
+      return shake = shakeOffset * nP;
     }).easing(TWEEN.Easing.Elastic.Out);
     this.shiftT = new TWEEN.Tween({
       p: 0
